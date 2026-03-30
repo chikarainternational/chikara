@@ -141,7 +141,11 @@ function closeAll(){
     el.classList.remove('playing');
     el.querySelectorAll('img, .play-icon').forEach(e=>e.style.display='');
     const iframe=el.querySelector('iframe');
-    if(iframe){iframe.src=`https://www.youtube-nocookie.com/embed/${el.dataset.v}?rel=0`;iframe.style.display='none';}
+    if(iframe){
+      iframe.src='about:blank';
+      iframe.style.display='none';
+      setTimeout(()=>{iframe.src=`https://www.youtube-nocookie.com/embed/${el.dataset.v}?rel=0`;},200);
+    }
   });
 }
 
@@ -154,7 +158,7 @@ lessons.forEach((l,i)=>{
   const p=document.createElement('p');p.className='lno';p.textContent=`LESSON ${l.no}`;col.appendChild(p);
   l.items.forEach(it=>{
     const p2=document.createElement('p');
-    p2.innerHTML=`<a href="#${it.id}" onclick="openLesson(${l.no})">${it.t}</a>`;
+    p2.innerHTML=`<a href="#${it.id}" onclick="return openLesson(${l.no},'${it.id}')">${it.t}</a>`;
     col.appendChild(p2);
   });
 });
@@ -193,7 +197,7 @@ function toggleAcc(btn){
   document.querySelectorAll('.acc-item').forEach(el=>el.classList.remove('open'));
   if(!isOpen){item.classList.add('open');setTimeout(()=>item.scrollIntoView({behavior:'smooth',block:'start'}),10);}
 }
-function openLesson(no){document.querySelectorAll('.acc-item').forEach(el=>el.classList.remove('open'));document.getElementById(`L${no}`).classList.add('open');}
+function openLesson(no,targetId){const items=document.querySelectorAll('.acc-item');items.forEach(el=>el.classList.remove('open'));const target=items[no-1];if(target){target.classList.add('open');setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'start'}),100);}return false;}
 function toggleToc(btn){
   const body=document.getElementById('toc-body');
   const open=btn.getAttribute('aria-expanded')==='true';
