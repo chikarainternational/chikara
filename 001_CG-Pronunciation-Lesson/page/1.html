@@ -423,8 +423,11 @@
       return `<img src="https://img.youtube.com/vi/${v}/hqdefault.jpg" alt="${t}" loading="lazy"><div class="play-icon"><span></span></div>`;
     }
     function closeAll() {
-      document.querySelectorAll('.yt[data-v]').forEach(el => {
-        if (el.querySelector('iframe')) el.innerHTML = makeThumbnail(el.dataset.v, el.dataset.t);
+      document.querySelectorAll('.yt.playing').forEach(el => {
+        el.classList.remove('playing');
+        el.querySelectorAll('img, .play-icon').forEach(e => e.style.display = '');
+        const iframe = el.querySelector('iframe');
+        if (iframe) { iframe.src = `https://www.youtube-nocookie.com/embed/${el.dataset.v}?rel=0`; iframe.style.display = 'none'; }
       });
     }
     lessons.forEach(l => {
@@ -436,11 +439,15 @@
         const card = document.createElement('div'); card.className = 'card';
         card.innerHTML = `<div class="card-title" id="${it.id}">${it.t}</div><div class="yt" data-v="${it.v}" data-t="${it.t}"></div>`;
         const yt = card.querySelector('.yt');
-        yt.innerHTML = makeThumbnail(it.v, it.t);
+        yt.innerHTML = makeThumbnail(it.v, it.t) + `<iframe src="https://www.youtube-nocookie.com/embed/${it.v}?rel=0" loading="lazy" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none"></iframe>`;
         yt.addEventListener('click', function () {
-          if (this.querySelector('iframe')) return;
+          if (this.classList.contains('playing')) return;
           closeAll();
-          this.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${this.dataset.v}?rel=0" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`;
+          this.classList.add('playing');
+          this.querySelectorAll('img, .play-icon').forEach(el => el.style.display = 'none');
+          const iframe = this.querySelector('iframe');
+          iframe.src = `https://www.youtube-nocookie.com/embed/${this.dataset.v}?rel=0&autoplay=1`;
+          iframe.style.display = 'block';
         });
         cards.appendChild(card);
       });
