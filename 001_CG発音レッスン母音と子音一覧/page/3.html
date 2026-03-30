@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CG発音レッスン母音と子音一覧</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Helvetica Neue',Arial,'Hiragino Kaku Gothic ProN',sans-serif;background:#f0f2f5;color:#1a2a3a;font-size:15px;overflow-x:hidden;user-select:none;-webkit-user-select:none}
+
+/* HEADER */
+.page-header{background:#1a3557;padding:20px 20px 18px;border-bottom:3px solid #e8610a}
+.page-header h1{font-size:clamp(15px,4vw,22px);font-weight:700;color:#fff;letter-spacing:.02em;line-height:1.3}
+.page-header p{font-size:11px;color:rgba(255,255,255,.5);margin-top:5px;letter-spacing:.08em}
+
+/* TOC */
+.toc{margin:16px;background:#fff;border:1px solid #dde2e8;border-radius:4px;overflow:hidden}
+.toc-btn{width:100%;background:#fff;border:none;padding:13px 16px;font-size:13px;font-weight:600;color:#1a3557;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:inherit;transition:background .15s}
+.toc-btn:hover{background:#f7f9fc}
+.toc-btn .arr{font-size:11px;color:#90a0b0;transition:transform .25s}
+.toc-btn[aria-expanded="true"] .arr{transform:rotate(180deg)}
+.toc-divider{height:1px;background:#edf0f4}
+.toc-body{display:none;padding:14px 16px}
+.toc-body.open{display:grid;grid-template-columns:repeat(2,1fr);gap:0 16px}
+@media(min-width:560px){.toc-body.open{grid-template-columns:repeat(4,1fr)}}
+.toc-col .lno{font-size:10px;font-weight:700;color:#e8610a;margin:10px 0 3px;letter-spacing:.06em}
+.toc-col:first-child .lno:first-child{margin-top:0}
+.toc-col p{font-size:12px;line-height:1.9}
+.toc-col a{color:#2563a8;text-decoration:none;transition:.15s}
+.toc-col a:hover{color:#e8610a}
+
+/* ACCORDION */
+.accordion{margin:0 16px 20px;display:flex;flex-direction:column;gap:6px}
+.acc-item{background:#fff;border:1px solid #dde2e8;border-radius:4px;overflow:hidden;transition:box-shadow .2s}
+.acc-item.open{box-shadow:0 2px 10px rgba(26,53,87,.1);border-color:#b8cce0}
+.acc-btn{width:100%;background:none;border:none;padding:13px 16px;font-size:13px;font-weight:600;color:#1a2a3a;text-align:left;cursor:pointer;display:flex;align-items:center;gap:10px;font-family:inherit;transition:background .15s}
+.acc-btn:hover{background:#f7f9fc}
+.acc-item.open .acc-btn{background:#f0f6ff;color:#1a3557}
+.badge{background:#1a3557;color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:2px;white-space:nowrap;flex-shrink:0;letter-spacing:.04em}
+.acc-item.open .badge{background:#e8610a}
+.titles{flex:1;font-size:12px;font-weight:400;color:#6b7c8d;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.arr{font-size:11px;color:#90a0b0;flex-shrink:0;transition:transform .25s}
+.acc-item.open .arr{transform:rotate(180deg);color:#2563a8}
+.acc-panel{display:none;padding:0 12px 12px;border-top:1px solid #edf0f4}
+.acc-item.open .acc-panel{display:block}
+
+/* CARDS */
+.cards{display:grid;grid-template-columns:1fr;gap:10px;padding-top:12px}
+@media(min-width:460px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:860px){.cards{grid-template-columns:repeat(3,1fr)}}
+.card{border:1px solid #dde2e8;border-radius:4px;overflow:hidden;background:#fff}
+.card-title{padding:9px 12px;font-size:12px;font-weight:600;color:#1a2a3a;line-height:1.5;background:#f7f9fc;border-bottom:1px solid #edf0f4}
+
+/* YT */
+.yt{position:relative;padding-top:56.25%;cursor:pointer;background:#dde2e8;overflow:hidden}
+.yt img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .2s}
+.yt:hover img{opacity:.85}
+.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.play-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.play-icon span{width:48px;height:48px;border-radius:50%;background:rgba(232,97,10,.9);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.play-icon span::after{content:'';width:0;height:0;border-style:solid;border-width:10px 0 10px 17px;border-color:transparent transparent transparent #fff;margin-left:3px}
+
+/* HAMBURGER */
+#hamburger{position:fixed;top:12px;right:12px;width:40px;height:40px;border-radius:4px;background:#1a3557;border:none;cursor:pointer;display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;z-index:300;padding:0;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+#hamburger.show{display:flex}
+#hamburger span{display:block;width:18px;height:2px;background:#fff;transition:.25s}
+#hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+#hamburger.active span:nth-child(2){opacity:0}
+#hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+#float-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none}
+#float-overlay.open{display:block}
+#float-panel{position:fixed;top:0;right:-100%;width:min(280px,82vw);height:100vh;background:#fff;border-left:1px solid #dde2e8;z-index:250;transition:right .28s;overflow-y:auto;padding:16px 14px;box-shadow:-4px 0 20px rgba(0,0,0,.1)}
+#float-panel.open{right:0}
+#float-panel .fp-head{font-size:13px;font-weight:700;color:#1a3557;border-bottom:2px solid #e8610a;padding-bottom:10px;margin-bottom:12px}
+#float-panel .toc-col .lno{font-size:10px;font-weight:700;color:#e8610a;display:block;margin:10px 0 3px}
+#float-panel .toc-col:first-child .lno:first-child{margin-top:0}
+#float-panel .toc-col p{font-size:12px;padding:1px 0;line-height:1.8}
+#float-panel .toc-col a{color:#2563a8;text-decoration:none}
+#float-panel .toc-col a:hover{color:#e8610a}
+
+/* PAGE TOP */
+.totop{position:fixed;right:14px;bottom:18px;width:40px;height:40px;border-radius:4px;background:#1a3557;border:none;color:#fff;font-size:16px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);display:none;align-items:center;justify-content:center}
+.totop.show{display:flex}
+.totop:hover{background:#e8610a}
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>CG発音レッスン母音と子音一覧</h1>
+  <p>LESSON 1–24 / 46 VIDEOS</p>
+</header>
+
+<div class="toc">
+  <button class="toc-btn" aria-expanded="false" onclick="toggleToc(this)">
+    目次 <span class="arr">▼</span>
+  </button>
+  <div class="toc-divider"></div>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+<div class="accordion" id="accordion"></div>
+
+<button class="totop" id="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<button id="hamburger" onclick="toggleFloat()" aria-label="目次"><span></span><span></span><span></span></button>
+<div id="float-overlay" onclick="closeFloat()"></div>
+<div id="float-panel"><div class="fp-head">目次</div><div id="float-toc-body"></div></div>
+
+<script>
+const lessons=[
+  {no:1,items:[{id:'A1',v:'eiOJrUijqb4',t:'母音「A」の発音'},{id:'I2',v:'kNCYzCI7Wp8',t:'母音「I」の発音'}]},
+  {no:2,items:[{id:'S3',v:'alvxT9Q1u9o',t:'子音「S」の発音'},{id:'Z4',v:'J9RKZ91rYCE',t:'子音「Z」の発音'}]},
+  {no:3,items:[{id:'T5',v:'BtzQWX-LV8w',t:'子音「T」の発音'},{id:'D6',v:'ZbmEzxc1mBg',t:'子音「D」の発音'}]},
+  {no:4,items:[{id:'F7',v:'BN1zskd7aQ4',t:'子音「F」の発音'},{id:'V8',v:'FuQOcSjKEU0',t:'子音「V」の発音'}]},
+  {no:5,items:[{id:'A9',v:'96-fcafJDNY',t:'母音「A」（æ）の発音'},{id:'O10',v:'NhpDv-wSPT8',t:'母音「O」の発音'}]},
+  {no:6,items:[{id:'A11',v:'i8nl-6n80-k',t:'1ミリ母音「A」の発音'},{id:'r12',v:'mIaWz1cLvc8',t:'母音「r」の発音'}]},
+  {no:7,items:[{id:'S13',v:'alvxT9Q1u9o',t:'子音「S」の発音'},{id:'she14',v:'pNDlzG_aifw',t:'子音「sh」の発音'}]},
+  {no:8,items:[{id:'EI15',v:'0NugxrgJqrI',t:'二重母音「EI」の発音'},{id:'AI16',v:'aL_LwzofPBo',t:'二重母音「AI」の発音'}]},
+  {no:9,items:[{id:'TH17',v:'-YJsD-cy4OA',t:'子音「TH」（スー）の発音'},{id:'TH18',v:'lUddZNqPpkg',t:'子音「TH」（ズ）の発音'}]},
+  {no:10,items:[{id:'she19',v:'pNDlzG_aifw',t:'子音「sh」の発音'},{id:'ju20',v:'lluxqCxhkU8',t:'子音「ʒ」の発音'}]},
+  {no:11,items:[{id:'K21',v:'CE3SOn44YeY',t:'子音「K」の発音'},{id:'G22',v:'7D-yoTNLFyg',t:'子音「G」の発音'}]},
+  {no:12,items:[{id:'L23',v:'9dQIuR0LsSQ',t:'子音「L」の発音'},{id:'R24',v:'j5dYxc1pAu4',t:'子音「R」の発音'},{id:'W25',v:'YMQGytLLYuE',t:'子音「W」の発音'}]},
+  {no:13,items:[{id:'P26',v:'OMoM6lHctMs',t:'子音「P」の発音'},{id:'B27',v:'IWHPfwnuUso',t:'子音「B」の発音'}]},
+  {no:14,items:[{id:'M28',v:'Zbmhr1GoU9s',t:'子音「M」の発音'},{id:'N29',v:'_KFa32wnGPo',t:'子音「N」の発音'},{id:'NG30',v:'IPFVAPtU34s',t:'子音「NG」の発音'}]},
+  {no:15,items:[{id:'ts31',v:'gHJoP5v6pqM',t:'子音「tʃ」の発音'},{id:'du32',v:'lf_cTVa4U-o',t:'子音「dʒ」の発音'}]},
+  {no:16,items:[{id:'i33',v:'11rlAmUtIfg',t:'母音「イ」の発音'},{id:'IE34',v:'kNCYzCI7Wp8',t:'母音「イエ」の発音'}]},
+  {no:17,items:[{id:'AU35',v:'xbFRN7b6l8c',t:'二重母音「AU」の発音'},{id:'OU36',v:'LpUX2kfi7BY',t:'二重母音「OU」の発音'}]},
+  {no:18,items:[{id:'OI37',v:'c7KMVT_oYbk',t:'二重母音「OI」の発音'}]},
+  {no:19,items:[{id:'H38',v:'Yv29recPhtc',t:'子音「H」の発音'},{id:'J39',v:'_OIR_ML-UEU',t:'子音「J」の発音'}]},
+  {no:20,items:[{id:'U40',v:'R7AwEN7KHX4',t:'母音「U」（ウー）の発音'},{id:'U41',v:'zX4HTyKEMYs',t:'母音「U」（短いウ）の発音'}]},
+  {no:21,items:[{id:'e42',v:'093oUKudxVI',t:'母音「E」の発音'},{id:'A43',v:'UjP0cOgv3r0',t:'母音「A」の発音'}]},
+  {no:22,items:[{id:'ABC44',v:'_VYuSs3DEMM',t:'アルファベットの発音'}]},
+  {no:23,items:[{id:'DEF45',v:'RyPEPuB6Mjc',t:'アルファベット「ゆっくりとハッキリ」'}]},
+  {no:24,items:[{id:'GHI46',v:'n4YZU-LdoYs',t:'アルファベット「語尾をのばして」'}]},
+];
+
+function makeThumbnail(v,t){
+  return `<img src="https://img.youtube.com/vi/${v}/hqdefault.jpg" alt="${t}" loading="lazy"><div class="play-icon"><span></span></div>`;
+}
+function closeAll(){
+  document.querySelectorAll('.yt[data-v]').forEach(el=>{
+    if(el.querySelector('iframe'))el.innerHTML=makeThumbnail(el.dataset.v,el.dataset.t);
+  });
+}
+
+// TOC
+const tocBody=document.getElementById('toc-body');
+const perCol=Math.ceil(lessons.length/4);
+const cols=Array.from({length:4},()=>{const d=document.createElement('div');d.className='toc-col';return d;});
+lessons.forEach((l,i)=>{
+  const col=cols[Math.min(Math.floor(i/perCol),3)];
+  const p=document.createElement('p');p.className='lno';p.textContent=`LESSON ${l.no}`;col.appendChild(p);
+  l.items.forEach(it=>{
+    const p2=document.createElement('p');
+    p2.innerHTML=`<a href="#${it.id}" onclick="openLesson(${l.no})">${it.t}</a>`;
+    col.appendChild(p2);
+  });
+});
+cols.forEach(c=>tocBody.appendChild(c));
+tocBody.addEventListener('click',e=>{if(e.target.tagName==='A'){const btn=document.querySelector('.toc-btn');btn.setAttribute('aria-expanded','false');tocBody.classList.remove('open');}});
+
+// Accordion
+const acc=document.getElementById('accordion');
+lessons.forEach(l=>{
+  const titles=l.items.map(it=>it.t).join('・');
+  const item=document.createElement('div');item.className='acc-item';item.id=`L${l.no}`;
+  item.innerHTML=`<button class="acc-btn" onclick="toggleAcc(this)"><span class="badge">LESSON ${l.no}</span><span class="titles">${titles}</span><span class="arr">▼</span></button><div class="acc-panel"><div class="cards"></div></div>`;
+  const cards=item.querySelector('.cards');
+  l.items.forEach(it=>{
+    const card=document.createElement('div');card.className='card';
+    card.innerHTML=`<div class="card-title" id="${it.id}">${it.t}</div><div class="yt" data-v="${it.v}" data-t="${it.t}"></div>`;
+    const yt=card.querySelector('.yt');
+    yt.innerHTML=makeThumbnail(it.v,it.t);
+    yt.addEventListener('click',function(){
+      if(this.querySelector('iframe'))return;
+      closeAll();
+      this.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${this.dataset.v}?autoplay=1&rel=0" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`;
+    });
+    cards.appendChild(card);
+  });
+  acc.appendChild(item);
+});
+
+function toggleAcc(btn){
+  const item=btn.closest('.acc-item');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.acc-item').forEach(el=>el.classList.remove('open'));
+  if(!isOpen){item.classList.add('open');setTimeout(()=>item.scrollIntoView({behavior:'smooth',block:'start'}),10);}
+}
+function openLesson(no){document.querySelectorAll('.acc-item').forEach(el=>el.classList.remove('open'));document.getElementById(`L${no}`).classList.add('open');}
+function toggleToc(btn){
+  const body=document.getElementById('toc-body');
+  const open=btn.getAttribute('aria-expanded')==='true';
+  btn.setAttribute('aria-expanded',String(!open));
+  body.classList.toggle('open',!open);
+}
+const totop=document.getElementById('totop');
+window.addEventListener('scroll',()=>totop.classList.toggle('show',scrollY>400),{passive:true});
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey&&['c','a','u','s','p'].includes(e.key.toLowerCase()))e.preventDefault();
+  if(e.key==='F12')e.preventDefault();
+});
+const hamburger=document.getElementById('hamburger');
+const floatPanel=document.getElementById('float-panel');
+const floatOverlay=document.getElementById('float-overlay');
+const floatBody=document.getElementById('float-toc-body');
+document.querySelectorAll('#toc-body .toc-col').forEach(col=>{
+  const c=col.cloneNode(true);
+  c.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeFloat));
+  floatBody.appendChild(c);
+});
+new IntersectionObserver(entries=>{
+  hamburger.classList.toggle('show',!entries[0].isIntersecting);
+},{threshold:0}).observe(document.querySelector('.toc'));
+function toggleFloat(){
+  const open=floatPanel.classList.toggle('open');
+  floatOverlay.classList.toggle('open',open);
+  hamburger.classList.toggle('active',open);
+}
+function closeFloat(){
+  floatPanel.classList.remove('open');
+  floatOverlay.classList.remove('open');
+  hamburger.classList.remove('active');
+}
+</script>
+</body>
+</html>
