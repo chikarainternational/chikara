@@ -173,7 +173,7 @@ lessons.forEach(l=>{
     yt.addEventListener('click',function(){
       if(this.querySelector('iframe'))return;
       closeAll();
-      this.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${this.dataset.v}?autoplay=1&rel=0" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`;
+      this.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${this.dataset.v}?rel=0" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>`;
     });
     cards.appendChild(card);
   });
