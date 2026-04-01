@@ -281,6 +281,12 @@
       height: 100%;
       border: 0
     }
+    .yt-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      cursor: pointer
+    }
 
     .play-icon {
       position: absolute;
@@ -422,34 +428,35 @@
     function closeAll() {
       document.querySelectorAll('.yt iframe').forEach(iframe => iframe.remove());
     }
+    function addOverlay(yt) {
+      if (yt.querySelector('.yt-overlay')) return;
+      const overlay = document.createElement('div');
+      overlay.className = 'yt-overlay';
+      overlay.addEventListener('click', () => {
+        const accItem = yt.closest('.acc-item');
+        accItem.querySelectorAll('.yt').forEach(sib => {
+          if (sib === yt) return;
+          const f = sib.querySelector('iframe');
+          if (f) { const src=f.src.replace(/&autoplay=1/,'').replace(/&playsinline=1/,''); f.src=''; f.src=src; }
+          addOverlay(sib);
+        });
+        overlay.remove();
+        const iframe = yt.querySelector('iframe');
+        if (iframe) iframe.src += '&autoplay=1&playsinline=1';
+      });
+      yt.appendChild(overlay);
+    }
     function openItem(item) {
       item.querySelectorAll('.yt[data-v]').forEach(yt => {
         if (yt.querySelector('iframe')) return;
         const iframe = document.createElement('iframe');
-        iframe.src = `https://www.youtube-nocookie.com/embed/${yt.dataset.v}?rel=0&enablejsapi=1`;
+        iframe.src = `https://www.youtube-nocookie.com/embed/${yt.dataset.v}?rel=0`;
         iframe.frameBorder = '0'; iframe.allowFullscreen = true;
         iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-        iframe.addEventListener('load', () => {
-          iframe.contentWindow.postMessage(JSON.stringify({event:'listening'}), '*');
-        });
         yt.appendChild(iframe);
+        addOverlay(yt);
       });
     }
-    window.addEventListener('message', function(e) {
-      if (!e.data || typeof e.data !== 'string') return;
-      let data; try { data=JSON.parse(e.data); } catch(err) { return; }
-      if (data.event !== 'onStateChange' || data.info !== 1) return;
-      const iframes = document.querySelectorAll('.yt iframe');
-      let playing = null;
-      iframes.forEach(f => { if (f.contentWindow === e.source) playing=f; });
-      if (!playing) return;
-      const accItem = playing.closest('.acc-item');
-      if (!accItem) return;
-      accItem.querySelectorAll('.yt iframe').forEach(f => {
-        if (f === playing) return;
-        const src=f.src; f.src=''; f.src=src;
-      });
-    });
     lessons.forEach(l => {
       const titles = l.items.map(it => it.t).join('・');
       const item = document.createElement('div'); item.className = 'acc-item'; item.id = `L${l.no}`;
