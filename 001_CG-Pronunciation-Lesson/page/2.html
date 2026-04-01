@@ -137,11 +137,11 @@ function makeThumbnail(v,t){
   return `<img src="https://img.youtube.com/vi/${v}/hqdefault.jpg" alt="${t}" loading="lazy"><div class="play-icon"><span></span></div>`;
 }
 function closeAll(){
-  document.querySelectorAll('.yt.playing').forEach(el=>{
-    el.classList.remove('playing');
-    el.querySelectorAll('img, .play-icon').forEach(e=>e.style.display='');
-    const iframe=el.querySelector('iframe');
-    if(iframe){iframe.src='about:blank';iframe.remove();}
+  document.querySelectorAll('.yt iframe').forEach(iframe=>{
+    iframe.src='about:blank';
+    const yt=iframe.closest('.yt');
+    iframe.remove();
+    if(yt){yt.classList.remove('playing');yt.querySelectorAll('img, .play-icon').forEach(e=>e.style.display='');}
   });
 }
 
