@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>管理者マニュアル｜CG発音レッスン母音と子音一覧</title>
+<style>
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 15px; line-height: 1.8; color: #222; max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 22px; border-bottom: 3px solid #222; padding-bottom: 10px; margin-bottom: 32px; }
+  h2 { font-size: 17px; margin-top: 48px; padding: 6px 12px; background: #f4f4f4; border-left: 4px solid #222; }
+  h3 { font-size: 15px; margin-top: 28px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+  code { font-family: 'Courier New', monospace; font-size: 13px; background: #f4f4f4; padding: 1px 5px; border-radius: 3px; }
+  pre { background: #f4f4f4; padding: 16px; overflow-x: auto; font-size: 13px; line-height: 1.6; border-left: 3px solid #aaa; }
+  pre code { background: none; padding: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th { background: #222; color: #fff; padding: 8px 12px; text-align: left; }
+  td { padding: 8px 12px; border-bottom: 1px solid #ddd; vertical-align: top; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .note { background: #fffbe6; border-left: 4px solid #f0c040; padding: 10px 14px; margin: 16px 0; font-size: 14px; }
+  .warn { background: #fff0f0; border-left: 4px solid #e04040; padding: 10px 14px; margin: 16px 0; font-size: 14px; }
+  nav { background: #f4f4f4; padding: 16px 20px; margin-bottom: 40px; font-size: 14px; }
+  nav ul { margin: 0; padding-left: 20px; }
+  nav li { margin: 4px 0; }
+  nav a { color: #222; }
+  .id-table td:nth-child(1), .id-table td:nth-child(2) { white-space: nowrap; }
+  .id-table tr.lesson-start td { border-top: 2px solid #bbb; }
+
+  /* Language toggle */
+  #lang-btn { position: fixed; top: 16px; right: 16px; padding: 5px 14px; font-size: 13px; font-weight: 700; background: #222; color: #fff; border: none; cursor: pointer; letter-spacing: .05em; }
+  #lang-btn:hover { background: #444; }
+  .en { display: none; }
+  body.lang-en .ja { display: none; }
+  body.lang-en span.en { display: inline; }
+  body.lang-en p.en, body.lang-en h1.en, body.lang-en h2.en, body.lang-en h3.en,
+  body.lang-en div.en, body.lang-en li.en, body.lang-en pre.en { display: block; }
+  body.lang-en ul.en { display: block; }
+  body.lang-en tr.en { display: table-row; }
+</style>
+</head>
+<body>
+
+<button id="lang-btn" onclick="toggleLang()">EN</button>
+
+<h1>
+  <span class="ja">CG発音レッスン 管理者マニュアル</span>
+  <span class="en">CG Pronunciation Lesson — Admin Manual</span>
+</h1>
+
+<nav>
+  <strong><span class="ja">目次</span><span class="en">Contents</span></strong>
+  <ul>
+    <li><a href="#files"><span class="ja">ファイル構成</span><span class="en">File Structure</span></a></li>
+    <li><a href="#data"><span class="ja">レッスンデータの構造</span><span class="en">Lesson Data Structure</span></a></li>
+    <li><a href="#edit-video"><span class="ja">動画の差し替え</span><span class="en">Replacing Videos</span></a></li>
+    <li><a href="#add-lesson"><span class="ja">レッスンの追加・削除</span><span class="en">Adding / Removing Lessons</span></a></li>
+    <li><a href="#link"><span class="ja">特定レッスンへの直リンク</span><span class="en">Direct Links to Lessons</span></a></li>
+    <li><a href="#themes"><span class="ja">デザインテーマの違い</span><span class="en">Design Theme Differences</span></a></li>
+    <li><a href="#id-list"><span class="ja">動画ID一覧</span><span class="en">Video ID List</span></a></li>
+    <li><a href="#notes"><span class="ja">運用上の注意</span><span class="en">Important Notes</span></a></li>
+  </ul>
+</nav>
+
+<!-- ===== FILE STRUCTURE ===== -->
+<h2 id="files">
+  <span class="ja">ファイル構成</span>
+  <span class="en">File Structure</span>
+</h2>
+
+<pre class="ja"><code>001_CG-Pronunciation-Lesson/
+├── page/
+│   ├── 1.html   ← 黒×黄 Bauhaus テーマ
+│   ├── 2.html   ← ティール グラデーションテーマ
+│   └── 3.html   ← ネイビー×オレンジ テーマ
+├── manual/
+│   └── manual.html  ← このファイル
+└── design/      ← デザイン素材置き場（現在空）</code></pre>
+<pre class="en"><code>001_CG-Pronunciation-Lesson/
+├── page/
+│   ├── 1.html   ← Black × Yellow Bauhaus theme
+│   ├── 2.html   ← Teal gradient theme
+│   └── 3.html   ← Navy × Orange theme
+├── manual/
+│   └── manual.html  ← This file
+└── design/      ← Design assets (currently empty)</code></pre>
+
+<p class="ja">3ファイルは<strong>機能・データが共通</strong>で、CSSデザインのみ異なります。コンテンツを変更する場合は3ファイルすべてを同じ内容に更新してください。</p>
+<p class="en">All 3 files share <strong>identical functionality and data</strong> — only the CSS design differs. When updating content, apply changes to all 3 files simultaneously.</p>
+<p class="ja">ビルド不要。すべて静的HTMLです。そのままWebサーバーに置くだけで動作します。</p>
+<p class="en">No build step required. All static HTML. Simply upload to any web server.</p>
+
+<!-- ===== LESSON DATA ===== -->
+<h2 id="data">
+  <span class="ja">レッスンデータの構造</span>
+  <span class="en">Lesson Data Structure</span>
+</h2>
+
+<p class="ja">各ファイルの <code>&lt;script&gt;</code> 冒頭にある <code>lessons</code> 配列がすべてのコンテンツ定義です。</p>
+<p class="en">The <code>lessons</code> array at the top of the <code>&lt;script&gt;</code> block in each file defines all content.</p>
+
+<pre><code>const lessons = [
+  {
+    no: 1,
+    items: [
+      { id: 'A1', v: 'eiOJrUijqb4', t: '母音「A」の発音' },
+      { id: 'I2', v: 'kNCYzCI7Wp8', t: '母音「I」の発音' }
+    ]
+  },
+  ...
+];</code></pre>
+
+<table>
+  <tr>
+    <th><span class="ja">プロパティ</span><span class="en">Property</span></th>
+    <th><span class="ja">役割</span><span class="en">Role</span></th>
+    <th><span class="ja">例</span><span class="en">Example</span></th>
+  </tr>
+  <tr>
+    <td><code>no</code></td>
+    <td><span class="ja">レッスン番号（1始まりの連番）</span><span class="en">Lesson number (sequential, starting at 1)</span></td>
+    <td><code>1</code></td>
+  </tr>
+  <tr>
+    <td><code>id</code></td>
+    <td><span class="ja">動画カードのHTML id。目次リンクのアンカーにもなる。<strong>全動画でユニークにすること</strong></span><span class="en">HTML id for the video card. Also used as the TOC anchor. <strong>Must be unique across all videos.</strong></span></td>
+    <td><code>'A1'</code></td>
+  </tr>
+  <tr>
+    <td><code>v</code></td>
+    <td><span class="ja">YouTubeの動画ID（URLの <code>?v=</code> 以降）</span><span class="en">YouTube video ID (the part after <code>?v=</code> in the URL)</span></td>
+    <td><code>'eiOJrUijqb4'</code></td>
+  </tr>
+  <tr>
+    <td><code>t</code></td>
+    <td><span class="ja">動画タイトル（目次・カードに表示）</span><span class="en">Video title (shown in TOC and card)</span></td>
+    <td><code>'母音「A」の発音'</code></td>
+  </tr>
+</table>
+
+<h3>
+  <span class="ja">YouTube動画IDの確認方法</span>
+  <span class="en">How to find a YouTube Video ID</span>
+</h3>
+<p class="ja">YouTubeのURLが <code>https://www.youtube.com/watch?v=<strong>eiOJrUijqb4</strong></code> の場合、<code>v=</code> 以降の文字列 <code>eiOJrUijqb4</code> が動画IDです。</p>
+<p class="en">If the YouTube URL is <code>https://www.youtube.com/watch?v=<strong>eiOJrUijqb4</strong></code>, the video ID is the string after <code>v=</code>: <code>eiOJrUijqb4</code>.</p>
+
+<!-- ===== REPLACING VIDEOS ===== -->
+<h2 id="edit-video">
+  <span class="ja">動画の差し替え</span>
+  <span class="en">Replacing Videos</span>
+</h2>
+
+<p class="ja">対象の <code>items</code> 内で <code>v</code> の値を新しい動画IDに書き換えるだけです。</p>
+<p class="en">Simply replace the <code>v</code> value with the new video ID in the target <code>items</code> entry.</p>
+
+<pre class="ja"><code>// 変更前
+{ id: 'A1', v: 'eiOJrUijqb4', t: '母音「A」の発音' }
+
+// 変更後（動画IDを差し替え）
+{ id: 'A1', v: '新しいVideoId', t: '母音「A」の発音' }</code></pre>
+<pre class="en"><code>// Before
+{ id: 'A1', v: 'eiOJrUijqb4', t: '母音「A」の発音' }
+
+// After (replace video ID)
+{ id: 'A1', v: 'newVideoId', t: '母音「A」の発音' }</code></pre>
+
+<div class="note ja">タイトル（<code>t</code>）も変更する場合は忘れずに。サムネイルも自動的に新しい動画のものに切り替わります。</div>
+<div class="note en">Remember to update the title (<code>t</code>) if it also changes. The thumbnail will automatically update to match the new video.</div>
+
+<!-- ===== ADD / REMOVE LESSONS ===== -->
+<h2 id="add-lesson">
+  <span class="ja">レッスンの追加・削除</span>
+  <span class="en">Adding / Removing Lessons</span>
+</h2>
+
+<h3>
+  <span class="ja">レッスンを追加する</span>
+  <span class="en">Adding a lesson</span>
+</h3>
+<p class="ja"><code>lessons</code> 配列の末尾に新しいオブジェクトを追加します。</p>
+<p class="en">Append a new object to the end of the <code>lessons</code> array.</p>
+
+<pre><code>{ no: 25, items: [{ id: 'XY47', v: 'newVideoId', t: 'New Lesson Title' }] },</code></pre>
+
+<div class="note ja"><strong>id のルール：</strong>英数字で構成し、全動画でユニークにしてください。慣例として「音素の略称＋連番」（例: <code>A1</code>, <code>TH17</code>, <code>ABC44</code>）としています。</div>
+<div class="note en"><strong>id rules:</strong> Use alphanumeric characters, unique across all videos. Convention is "phoneme abbreviation + sequence number" (e.g. <code>A1</code>, <code>TH17</code>, <code>ABC44</code>).</div>
+
+<h3>
+  <span class="ja">1つのレッスンに複数動画を入れる</span>
+  <span class="en">Multiple videos per lesson</span>
+</h3>
+<pre><code>{ no: 25, items: [
+  { id: 'XX47', v: 'VideoId_1', t: 'Title 1' },
+  { id: 'YY48', v: 'VideoId_2', t: 'Title 2' }
+]}</code></pre>
+
+<h3>
+  <span class="ja">レッスンを削除する</span>
+  <span class="en">Removing a lesson</span>
+</h3>
+<p class="ja">該当行を配列から削除します。<code>no</code>（レッスン番号）は連番を維持してください。途中の番号が抜けると目次の番号表示がずれます。</p>
+<p class="en">Delete the row from the array. Keep <code>no</code> sequential — gaps in numbering will misalign the TOC display.</p>
+
+<h3>
+  <span class="ja">ヘッダーの動画本数表示を更新する</span>
+  <span class="en">Updating the header count</span>
+</h3>
+<p class="ja">レッスン数・動画数を変更したら、各ファイルのヘッダー表示も手動で合わせます。</p>
+<p class="en">After changing lesson/video counts, manually update the header text in each file.</p>
+<pre><code>&lt;p&gt;LESSON 1–24 / 46 VIDEOS&lt;/p&gt;</code></pre>
+
+<!-- ===== DIRECT LINKS ===== -->
+<h2 id="link">
+  <span class="ja">特定レッスンへの直リンク</span>
+  <span class="en">Direct Links to Lessons</span>
+</h2>
+
+<p class="ja">URLにハッシュを付けると、ページ読み込み時に該当アコーディオンが自動で開きます。</p>
+<p class="en">Adding a hash to the URL auto-opens the corresponding accordion on page load.</p>
+
+<table>
+  <tr>
+    <th><span class="ja">形式</span><span class="en">Format</span></th>
+    <th><span class="ja">説明</span><span class="en">Description</span></th>
+    <th><span class="ja">例</span><span class="en">Example</span></th>
+  </tr>
+  <tr>
+    <td><code>#L{<span class="ja">番号</span><span class="en">number</span>}</code></td>
+    <td><span class="ja">レッスン番号で指定</span><span class="en">Open by lesson number</span></td>
+    <td><code>page/1.html#L5</code> → <span class="ja">LESSON 5を開く</span><span class="en">Opens LESSON 5</span></td>
+  </tr>
+  <tr>
+    <td><code>#{<span class="ja">動画id</span><span class="en">video id</span>}</code></td>
+    <td><span class="ja">動画IDで指定</span><span class="en">Open by video ID</span></td>
+    <td><code>page/1.html#DEF45</code> → <span class="ja">その動画を含むレッスンを開く</span><span class="en">Opens the lesson containing that video</span></td>
+  </tr>
+</table>
+
+<!-- ===== THEMES ===== -->
+<h2 id="themes">
+  <span class="ja">デザインテーマの違い</span>
+  <span class="en">Design Theme Differences</span>
+</h2>
+
+<table>
+  <tr>
+    <th><span class="ja">ファイル</span><span class="en">File</span></th>
+    <th><span class="ja">テーマ</span><span class="en">Theme</span></th>
+    <th><span class="ja">メインカラー</span><span class="en">Main Colors</span></th>
+  </tr>
+  <tr><td><code>1.html</code></td><td><span class="ja">Bauhaus（黒×黄）</span><span class="en">Bauhaus (Black × Yellow)</span></td><td><code>#111</code> + <code>#FFE500</code></td></tr>
+  <tr><td><code>2.html</code></td><td><span class="ja">モダン（ティール）</span><span class="en">Modern (Teal)</span></td><td><code>#059669</code> + <code>#0891b2</code></td></tr>
+  <tr><td><code>3.html</code></td><td><span class="ja">コーポレート（ネイビー×オレンジ）</span><span class="en">Corporate (Navy × Orange)</span></td><td><code>#1a3557</code> + <code>#e8610a</code></td></tr>
+</table>
+
+<p class="ja">3ファイルのJSロジックとデータ構造は同一です。CSSクラス名が一部異なります（例：<code>1.html</code>は<code>.lesson-badge</code>、<code>2.html</code>/<code>3.html</code>は<code>.badge</code>）。</p>
+<p class="en">All 3 files have identical JS logic and data structure. Some CSS class names differ (e.g. <code>1.html</code> uses <code>.lesson-badge</code>, while <code>2.html</code>/<code>3.html</code> use <code>.badge</code>).</p>
+
+<!-- ===== ID LIST ===== -->
+<h2 id="id-list">
+  <span class="ja">動画ID一覧</span>
+  <span class="en">Video ID List</span>
+</h2>
+
+<p class="ja">現在登録されている全46動画のID一覧です。新しいIDを追加する際の重複確認や直リンクURL作成に使用してください。</p>
+<p class="en">Complete list of all 46 registered video IDs. Use this for duplicate checking when adding new IDs and for building direct link URLs.</p>
+
+<table class="id-table">
+  <tr>
+    <th><span class="ja">動画ID（id）</span><span class="en">Video ID (id)</span></th>
+    <th><span class="ja">レッスン</span><span class="en">Lesson</span></th>
+    <th><span class="ja">タイトル</span><span class="en">Title</span></th>
+    <th><span class="ja">YouTube動画ID（v）</span><span class="en">YouTube Video ID (v)</span></th>
+  </tr>
+  <tr class="lesson-start"><td><code>A1</code></td><td>L1</td><td>母音「A」の発音</td><td><code>eiOJrUijqb4</code></td></tr>
+  <tr><td><code>I2</code></td><td>L1</td><td>母音「I」の発音</td><td><code>kNCYzCI7Wp8</code></td></tr>
+  <tr class="lesson-start"><td><code>S3</code></td><td>L2</td><td>子音「S」の発音</td><td><code>alvxT9Q1u9o</code></td></tr>
+  <tr><td><code>Z4</code></td><td>L2</td><td>子音「Z」の発音</td><td><code>J9RKZ91rYCE</code></td></tr>
+  <tr class="lesson-start"><td><code>T5</code></td><td>L3</td><td>子音「T」の発音</td><td><code>BtzQWX-LV8w</code></td></tr>
+  <tr><td><code>D6</code></td><td>L3</td><td>子音「D」の発音</td><td><code>ZbmEzxc1mBg</code></td></tr>
+  <tr class="lesson-start"><td><code>F7</code></td><td>L4</td><td>子音「F」の発音</td><td><code>BN1zskd7aQ4</code></td></tr>
+  <tr><td><code>V8</code></td><td>L4</td><td>子音「V」の発音</td><td><code>FuQOcSjKEU0</code></td></tr>
+  <tr class="lesson-start"><td><code>A9</code></td><td>L5</td><td>母音「A」（æ）の発音</td><td><code>96-fcafJDNY</code></td></tr>
+  <tr><td><code>O10</code></td><td>L5</td><td>母音「O」の発音</td><td><code>NhpDv-wSPT8</code></td></tr>
+  <tr class="lesson-start"><td><code>A11</code></td><td>L6</td><td>1ミリ母音「A」の発音</td><td><code>i8nl-6n80-k</code></td></tr>
+  <tr><td><code>r12</code></td><td>L6</td><td>母音「r」の発音</td><td><code>mIaWz1cLvc8</code></td></tr>
+  <tr class="lesson-start"><td><code>S13</code></td><td>L7</td><td>子音「S」の発音</td><td><code>alvxT9Q1u9o</code></td></tr>
+  <tr><td><code>she14</code></td><td>L7</td><td>子音「sh」の発音</td><td><code>pNDlzG_aifw</code></td></tr>
+  <tr class="lesson-start"><td><code>EI15</code></td><td>L8</td><td>二重母音「EI」の発音</td><td><code>0NugxrgJqrI</code></td></tr>
+  <tr><td><code>AI16</code></td><td>L8</td><td>二重母音「AI」の発音</td><td><code>aL_LwzofPBo</code></td></tr>
+  <tr class="lesson-start"><td><code>TH17</code></td><td>L9</td><td>子音「TH」（スー）の発音</td><td><code>-YJsD-cy4OA</code></td></tr>
+  <tr><td><code>TH18</code></td><td>L9</td><td>子音「TH」（ズ）の発音</td><td><code>lUddZNqPpkg</code></td></tr>
+  <tr class="lesson-start"><td><code>she19</code></td><td>L10</td><td>子音「sh」の発音</td><td><code>pNDlzG_aifw</code></td></tr>
+  <tr><td><code>ju20</code></td><td>L10</td><td>子音「ʒ」の発音</td><td><code>lluxqCxhkU8</code></td></tr>
+  <tr class="lesson-start"><td><code>K21</code></td><td>L11</td><td>子音「K」の発音</td><td><code>CE3SOn44YeY</code></td></tr>
+  <tr><td><code>G22</code></td><td>L11</td><td>子音「G」の発音</td><td><code>7D-yoTNLFyg</code></td></tr>
+  <tr class="lesson-start"><td><code>L23</code></td><td>L12</td><td>子音「L」の発音</td><td><code>9dQIuR0LsSQ</code></td></tr>
+  <tr><td><code>R24</code></td><td>L12</td><td>子音「R」の発音</td><td><code>j5dYxc1pAu4</code></td></tr>
+  <tr><td><code>W25</code></td><td>L12</td><td>子音「W」の発音</td><td><code>YMQGytLLYuE</code></td></tr>
+  <tr class="lesson-start"><td><code>P26</code></td><td>L13</td><td>子音「P」の発音</td><td><code>OMoM6lHctMs</code></td></tr>
+  <tr><td><code>B27</code></td><td>L13</td><td>子音「B」の発音</td><td><code>IWHPfwnuUso</code></td></tr>
+  <tr class="lesson-start"><td><code>M28</code></td><td>L14</td><td>子音「M」の発音</td><td><code>Zbmhr1GoU9s</code></td></tr>
+  <tr><td><code>N29</code></td><td>L14</td><td>子音「N」の発音</td><td><code>_KFa32wnGPo</code></td></tr>
+  <tr><td><code>NG30</code></td><td>L14</td><td>子音「NG」の発音</td><td><code>IPFVAPtU34s</code></td></tr>
+  <tr class="lesson-start"><td><code>ts31</code></td><td>L15</td><td>子音「tʃ」の発音</td><td><code>gHJoP5v6pqM</code></td></tr>
+  <tr><td><code>du32</code></td><td>L15</td><td>子音「dʒ」の発音</td><td><code>lf_cTVa4U-o</code></td></tr>
+  <tr class="lesson-start"><td><code>i33</code></td><td>L16</td><td>母音「イ」の発音</td><td><code>11rlAmUtIfg</code></td></tr>
+  <tr><td><code>IE34</code></td><td>L16</td><td>母音「イエ」の発音</td><td><code>kNCYzCI7Wp8</code></td></tr>
+  <tr class="lesson-start"><td><code>AU35</code></td><td>L17</td><td>二重母音「AU」の発音</td><td><code>xbFRN7b6l8c</code></td></tr>
+  <tr><td><code>OU36</code></td><td>L17</td><td>二重母音「OU」の発音</td><td><code>LpUX2kfi7BY</code></td></tr>
+  <tr class="lesson-start"><td><code>OI37</code></td><td>L18</td><td>二重母音「OI」の発音</td><td><code>c7KMVT_oYbk</code></td></tr>
+  <tr class="lesson-start"><td><code>H38</code></td><td>L19</td><td>子音「H」の発音</td><td><code>Yv29recPhtc</code></td></tr>
+  <tr><td><code>J39</code></td><td>L19</td><td>子音「J」の発音</td><td><code>_OIR_ML-UEU</code></td></tr>
+  <tr class="lesson-start"><td><code>U40</code></td><td>L20</td><td>母音「U」（ウー）の発音</td><td><code>R7AwEN7KHX4</code></td></tr>
+  <tr><td><code>U41</code></td><td>L20</td><td>母音「U」（短いウ）の発音</td><td><code>zX4HTyKEMYs</code></td></tr>
+  <tr class="lesson-start"><td><code>e42</code></td><td>L21</td><td>母音「E」の発音</td><td><code>093oUKudxVI</code></td></tr>
+  <tr><td><code>A43</code></td><td>L21</td><td>母音「A」の発音</td><td><code>UjP0cOgv3r0</code></td></tr>
+  <tr class="lesson-start"><td><code>ABC44</code></td><td>L22</td><td>アルファベットの発音</td><td><code>_VYuSs3DEMM</code></td></tr>
+  <tr class="lesson-start"><td><code>DEF45</code></td><td>L23</td><td>アルファベット「ゆっくりとハッキリ」</td><td><code>RyPEPuB6Mjc</code></td></tr>
+  <tr class="lesson-start"><td><code>GHI46</code></td><td>L24</td><td>アルファベット「語尾をのばして」</td><td><code>n4YZU-LdoYs</code></td></tr>
+</table>
+
+<!-- ===== NOTES ===== -->
+<h2 id="notes">
+  <span class="ja">運用上の注意</span>
+  <span class="en">Important Notes</span>
+</h2>
+
+<h3>
+  <span class="ja">検索エンジンへの非表示設定</span>
+  <span class="en">Search engine exclusion</span>
+</h3>
+<p class="ja">全ページに以下が設定されており、検索エンジンにインデックスされません。意図的な設定です。変更しないでください。</p>
+<p class="en">All pages include the following tag to prevent search engine indexing. This is intentional — do not remove it.</p>
+<pre><code>&lt;meta name="robots" content="noindex,nofollow"&gt;</code></pre>
+
+<h3>
+  <span class="ja">右クリック・開発者ツールの無効化</span>
+  <span class="en">Disabled interactions</span>
+</h3>
+<p class="ja">以下の操作はJSで無効化されています。これも意図的な設定です。</p>
+<p class="en">The following are intentionally disabled via JavaScript.</p>
+<ul class="ja">
+  <li>右クリック（コンテキストメニュー）</li>
+  <li>F12（開発者ツール）</li>
+  <li>Ctrl+C / Ctrl+A / Ctrl+U / Ctrl+S / Ctrl+P</li>
+</ul>
+<ul class="en">
+  <li>Right-click (context menu)</li>
+  <li>F12 (DevTools)</li>
+  <li>Ctrl+C / Ctrl+A / Ctrl+U / Ctrl+S / Ctrl+P</li>
+</ul>
+
+<h3>
+  <span class="ja">YouTubeの埋め込みドメイン</span>
+  <span class="en">YouTube embed domain</span>
+</h3>
+<p class="ja"><code>youtube-nocookie.com</code> を使用しています（プライバシー強化モード）。<code>youtube.com</code> には変更しないでください。</p>
+<p class="en">Uses <code>youtube-nocookie.com</code> (privacy-enhanced mode). Do not change to <code>youtube.com</code>.</p>
+
+<div class="warn ja">
+  <strong>変更は3ファイルに同時適用してください。</strong><br>
+  <code>1.html</code> / <code>2.html</code> / <code>3.html</code> は同じデータ・ロジックを持ちます。1ファイルだけ変更するとテーマ間で内容が食い違います。
+</div>
+<div class="warn en">
+  <strong>Apply changes to all 3 files simultaneously.</strong><br>
+  <code>1.html</code> / <code>2.html</code> / <code>3.html</code> share the same data and logic. Updating only one file will cause content inconsistency between themes.
+</div>
+
+<script>
+  function toggleLang() {
+    const isEn = document.body.classList.toggle('lang-en');
+    document.getElementById('lang-btn').textContent = isEn ? 'JA' : 'EN';
+    document.documentElement.lang = isEn ? 'en' : 'ja';
+  }
+</script>
+</body>
+</html>
