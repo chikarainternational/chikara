@@ -135,15 +135,9 @@ const lessons=[
   {no:24,items:[{id:'GHI46',v:'n4YZU-LdoYs',t:'アルファベット「語尾をのばして」'}]},
 ];
 
-function makeThumbnail(v,t){
-  return `<img src="https://img.youtube.com/vi/${v}/hqdefault.jpg" alt="${t}" loading="lazy"><div class="play-icon"><span></span></div>`;
-}
 function closeAll(){
   document.querySelectorAll('.yt iframe').forEach(iframe=>{
-    iframe.src='about:blank';
-    const yt=iframe.closest('.yt');
-    iframe.remove();
-    if(yt){yt.classList.remove('playing');yt.querySelectorAll('img, .play-icon').forEach(e=>e.style.display='');}
+    const src=iframe.src; iframe.src=''; iframe.src=src;
   });
 }
 
@@ -172,20 +166,7 @@ lessons.forEach(l=>{
   const cards=item.querySelector('.cards');
   l.items.forEach(it=>{
     const card=document.createElement('div');card.className='card';
-    card.innerHTML=`<div class="card-title" id="${it.id}">${it.t}</div><div class="yt" data-v="${it.v}" data-t="${it.t}"></div>`;
-    const yt=card.querySelector('.yt');
-    yt.innerHTML=makeThumbnail(it.v,it.t);
-    yt.addEventListener('click',function(){
-      if(this.classList.contains('playing'))return;
-      closeAll();
-      this.classList.add('playing');
-      this.querySelectorAll('img, .play-icon').forEach(el=>el.style.display='none');
-      const iframe=document.createElement('iframe');
-      iframe.src=`https://www.youtube-nocookie.com/embed/${this.dataset.v}?rel=0&autoplay=1&playsinline=1`;
-      iframe.frameBorder='0';iframe.allowFullscreen=true;
-      iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-      this.appendChild(iframe);
-    });
+    card.innerHTML=`<div class="card-title" id="${it.id}">${it.t}</div><div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/${it.v}?rel=0&enablejsapi=1" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`;
     cards.appendChild(card);
   });
   acc.appendChild(item);
