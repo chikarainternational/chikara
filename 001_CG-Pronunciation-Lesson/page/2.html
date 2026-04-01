@@ -134,36 +134,29 @@ const lessons=[
   {no:24,items:[{id:'GHI46',v:'n4YZU-LdoYs',t:'アルファベット「語尾をのばして」'}]},
 ];
 
-function closeAll(){
-  document.querySelectorAll('.yt iframe').forEach(iframe=>iframe.remove());
+function showThumb(yt){
+  yt.innerHTML=`<img src="https://img.youtube.com/vi/${yt.dataset.v}/hqdefault.jpg" loading="lazy"><div class="play-icon"><span></span></div>`;
 }
-function addOverlay(yt){
-  if(yt.querySelector('.yt-overlay'))return;
-  const overlay=document.createElement('div');
-  overlay.className='yt-overlay';
-  overlay.addEventListener('click',()=>{
-    const accItem=yt.closest('.acc-item');
-    accItem.querySelectorAll('.yt').forEach(sib=>{
-      if(sib===yt)return;
-      const f=sib.querySelector('iframe');
-      if(f){const src=f.src.replace(/&autoplay=1/,'').replace(/&playsinline=1/,'');f.src='';f.src=src;}
-      addOverlay(sib);
-    });
-    overlay.remove();
-    const iframe=yt.querySelector('iframe');
-    if(iframe)iframe.src+='&autoplay=1&playsinline=1';
+function closeAll(){
+  document.querySelectorAll('.yt[data-v]').forEach(yt=>{
+    if(yt.querySelector('iframe')||yt.querySelector('img'))showThumb(yt);
+    yt.onclick=null;
   });
-  yt.appendChild(overlay);
 }
 function openItem(item){
   item.querySelectorAll('.yt[data-v]').forEach(yt=>{
-    if(yt.querySelector('iframe'))return;
-    const iframe=document.createElement('iframe');
-    iframe.src=`https://www.youtube-nocookie.com/embed/${yt.dataset.v}?rel=0`;
-    iframe.frameBorder='0';iframe.allowFullscreen=true;
-    iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-    yt.appendChild(iframe);
-    addOverlay(yt);
+    if(!yt.querySelector('img')&&!yt.querySelector('iframe'))showThumb(yt);
+    yt.onclick=function(){
+      if(this.querySelector('iframe'))return;
+      const accItem=this.closest('.acc-item');
+      accItem.querySelectorAll('.yt[data-v]').forEach(sib=>{if(sib!==this)showThumb(sib);});
+      this.innerHTML='';
+      const iframe=document.createElement('iframe');
+      iframe.src=`https://www.youtube-nocookie.com/embed/${this.dataset.v}?rel=0&autoplay=1&playsinline=1`;
+      iframe.frameBorder='0';iframe.allowFullscreen=true;
+      iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      this.appendChild(iframe);
+    };
   });
 }
 

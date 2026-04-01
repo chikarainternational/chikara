@@ -32,21 +32,21 @@ All lesson data lives in a single `lessons` array at the top of the `<script>` b
 
 | Function | Role |
 |---|---|
-| `openItem(item)` | Creates iframes + overlays for all `.yt[data-v]` inside an accordion item |
-| `closeAll()` | Removes all iframes across all accordions (called before opening a new one) |
-| `addOverlay(yt)` | Adds a transparent intercept layer on top of an iframe; on click → resets siblings (strip autoplay from src before reload), removes itself, appends `&autoplay=1&playsinline=1` to trigger playback |
+| `showThumb(yt)` | Renders YouTube thumbnail + play icon into a `.yt` element |
+| `openItem(item)` | Shows thumbnails for all `.yt[data-v]` in an accordion item and sets `onclick` handler |
+| `closeAll()` | Restores thumbnails and clears `onclick` for all `.yt` elements across all accordions |
 | `toggleAcc(btn)` | Accordion button click handler — calls `closeAll()` then `openItem()` |
 | `openLesson(no, targetId)` | TOC link handler — same as `toggleAcc` but by lesson number index |
 
 ### Video Lazy-Load Flow
 
-1. Accordions start **closed** — no iframes in DOM
-2. Opening an accordion calls `openItem()` → iframes created with `?rel=0` (no autoplay yet)
-3. Each iframe gets a `.yt-overlay` div (z-index:1) on top
-4. Tapping the overlay:
-   - Resets all **sibling** iframes in the same accordion (strip `&autoplay=1&playsinline=1` from src, reload)
-   - Removes its own overlay
-   - Appends `&autoplay=1&playsinline=1` to trigger playback via user gesture
+1. Accordions start **closed** — `.yt` divs are empty
+2. Opening an accordion calls `openItem()` → thumbnails rendered, `onclick` set on each `.yt`
+3. Tapping a thumbnail (`.yt`):
+   - Resets all **sibling** `.yt` in the same accordion back to thumbnail via `showThumb()`
+   - Clears own content, creates a **new iframe** with `?rel=0&autoplay=1&playsinline=1`
+   - New iframe creation within user gesture → autoplay permitted on iOS
+4. Closing the accordion calls `closeAll()` → all iframes replaced with thumbnails, `onclick` cleared
 
 ### URL Hash Auto-Open
 
