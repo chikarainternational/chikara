@@ -134,8 +134,16 @@ const lessons=[
 ];
 
 function closeAll(){
-  document.querySelectorAll('.yt iframe').forEach(iframe=>{
-    const src=iframe.src; iframe.src=''; iframe.src=src;
+  document.querySelectorAll('.yt iframe').forEach(iframe=>iframe.remove());
+}
+function openItem(item){
+  item.querySelectorAll('.yt[data-v]').forEach(yt=>{
+    if(yt.querySelector('iframe'))return;
+    const iframe=document.createElement('iframe');
+    iframe.src=`https://www.youtube-nocookie.com/embed/${yt.dataset.v}?rel=0`;
+    iframe.frameBorder='0';iframe.allowFullscreen=true;
+    iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    yt.appendChild(iframe);
   });
 }
 
@@ -164,7 +172,7 @@ lessons.forEach(l=>{
   const cards=item.querySelector('.cards');
   l.items.forEach(it=>{
     const card=document.createElement('div');card.className='card';
-    card.innerHTML=`<div class="card-title" id="${it.id}">${it.t}</div><div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/${it.v}?rel=0&enablejsapi=1" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`;
+    card.innerHTML=`<div class="card-title" id="${it.id}">${it.t}</div><div class="yt" data-v="${it.v}"></div>`;
     cards.appendChild(card);
   });
   acc.appendChild(item);
@@ -175,9 +183,9 @@ function toggleAcc(btn){
   const isOpen=item.classList.contains('open');
   closeAll();
   document.querySelectorAll('.acc-item').forEach(el=>el.classList.remove('open'));
-  if(!isOpen){item.classList.add('open');setTimeout(()=>item.scrollIntoView({behavior:'smooth',block:'start'}),10);}
+  if(!isOpen){item.classList.add('open');openItem(item);setTimeout(()=>item.scrollIntoView({behavior:'smooth',block:'start'}),10);}
 }
-function openLesson(no,targetId){closeAll();const items=document.querySelectorAll('.acc-item');items.forEach(el=>el.classList.remove('open'));const target=items[no-1];if(target){target.classList.add('open');setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'start'}),100);}return false;}
+function openLesson(no,targetId){closeAll();const items=document.querySelectorAll('.acc-item');items.forEach(el=>el.classList.remove('open'));const target=items[no-1];if(target){target.classList.add('open');openItem(target);setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'start'}),100);}return false;}
 function toggleToc(btn){
   const body=document.getElementById('toc-body');
   const open=btn.getAttribute('aria-expanded')==='true';
@@ -230,6 +238,7 @@ function closeFloat(){
   if(target){
     document.querySelectorAll('.acc-item').forEach(el=>el.classList.remove('open'));
     target.classList.add('open');
+    openItem(target);
     setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'start'}),150);
   }
 })();
