@@ -427,11 +427,7 @@
         el.classList.remove('playing');
         el.querySelectorAll('img, .play-icon').forEach(e => e.style.display = '');
         const iframe = el.querySelector('iframe');
-        if (iframe) {
-          iframe.src = 'about:blank';
-          iframe.style.display = 'none';
-          setTimeout(() => { iframe.src = `https://www.youtube-nocookie.com/embed/${el.dataset.v}?rel=0`; }, 200);
-        }
+        if (iframe) { iframe.src = 'about:blank'; iframe.remove(); }
       });
     }
     lessons.forEach(l => {
@@ -443,15 +439,18 @@
         const card = document.createElement('div'); card.className = 'card';
         card.innerHTML = `<div class="card-title" id="${it.id}">${it.t}</div><div class="yt" data-v="${it.v}" data-t="${it.t}"></div>`;
         const yt = card.querySelector('.yt');
-        yt.innerHTML = makeThumbnail(it.v, it.t) + `<iframe src="https://www.youtube-nocookie.com/embed/${it.v}?rel=0" loading="lazy" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="display:none"></iframe>`;
+        yt.innerHTML = makeThumbnail(it.v, it.t);
         yt.addEventListener('click', function () {
           if (this.classList.contains('playing')) return;
           closeAll();
           this.classList.add('playing');
           this.querySelectorAll('img, .play-icon').forEach(el => el.style.display = 'none');
-          const iframe = this.querySelector('iframe');
+          const iframe = document.createElement('iframe');
           iframe.src = `https://www.youtube-nocookie.com/embed/${this.dataset.v}?rel=0&autoplay=1`;
-          iframe.style.display = 'block';
+          iframe.frameBorder = '0';
+          iframe.allowFullscreen = true;
+          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+          this.appendChild(iframe);
         });
         cards.appendChild(card);
       });
@@ -461,10 +460,11 @@
     function toggleAcc(btn) {
       const item=btn.closest('.acc-item');
       const isOpen=item.classList.contains('open');
+      closeAll();
       document.querySelectorAll('.acc-item').forEach(el=>el.classList.remove('open'));
       if(!isOpen){item.classList.add('open');setTimeout(()=>item.scrollIntoView({behavior:'smooth',block:'start'}),10);}
     }
-    function openLesson(no,targetId){const items=document.querySelectorAll('.acc-item');items.forEach(el=>el.classList.remove('open'));const target=items[no-1];if(target){target.classList.add('open');setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'start'}),100);}return false;}
+    function openLesson(no,targetId){closeAll();const items=document.querySelectorAll('.acc-item');items.forEach(el=>el.classList.remove('open'));const target=items[no-1];if(target){target.classList.add('open');setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'start'}),100);}return false;}
 
     // TOC toggle
     function toggleToc(btn) {
