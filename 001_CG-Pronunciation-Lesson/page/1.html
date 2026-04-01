@@ -510,6 +510,27 @@
       floatOverlay.classList.remove('open');
       hamburger.classList.remove('active');
     }
+
+    // URL hash → open accordion on load
+    (function(){
+      const hash=window.location.hash;
+      if(!hash)return;
+      const id=hash.slice(1);
+      let target=null;
+      const mL=id.match(/^L(\d+)$/);
+      if(mL){
+        const items=document.querySelectorAll('.acc-item');
+        target=items[parseInt(mL[1])-1]||null;
+      } else {
+        const el=document.getElementById(id);
+        if(el)target=el.closest('.acc-item');
+      }
+      if(target){
+        document.querySelectorAll('.acc-item').forEach(el=>el.classList.remove('open'));
+        target.classList.add('open');
+        setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'start'}),150);
+      }
+    })();
   </script>
 </body>
 
