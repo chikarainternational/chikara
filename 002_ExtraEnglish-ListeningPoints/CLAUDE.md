@@ -14,6 +14,8 @@ This directory contains a **static multi-page web app** and design assets for th
 │   └── design_sp.pen              # Pencil UI design file (SP + Tablet + PC frames)
 ├── document/
 │   └── Extra English 学習ポイント・リスニングポイント.pdf  # Canonical content source
+├── manual/
+│   └── manual.html                # Admin manual (JP/EN toggle, bilingual)
 └── page/                          # Static web app (19 HTML pages)
     ├── style.css                  # Shared styles — mobile-first, responsive
     ├── js/
@@ -157,6 +159,21 @@ SP フレームレイアウト:
 - Header: y=44, h=88, `fill: #0077B6`
 - Day subheader: y=132, h=36, `fill: #CAF0F8`
 - Content: y=168, remaining, `fill: #F0F9FF`
+
+## Admin Manual
+
+`manual/manual.html` — 管理者向け運用マニュアル。JP/EN 切替ボタン付き。
+
+セクション構成:
+1. ファイル構成
+2. ページ構成と役割
+3. コンテンツの編集（学習ポイント・リスニングポイント）
+4. YouTube バナーの変更
+5. レッスンページの追加手順
+6. レスポンシブレイアウトの仕様
+7. 運用上の注意
+
+スタイルは `001_CG-Pronunciation-Lesson/manual/manual.html` と同一パターン（スタンドアロン HTML、インライン CSS/JS）。
 
 ## Source Document
 
