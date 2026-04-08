@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>管理者マニュアル｜Extra English リスニング完全攻略ガイド</title>
+<style>
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 15px; line-height: 1.8; color: #222; max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 22px; border-bottom: 3px solid #222; padding-bottom: 10px; margin-bottom: 32px; }
+  h2 { font-size: 17px; margin-top: 48px; padding: 6px 12px; background: #f4f4f4; border-left: 4px solid #222; }
+  h3 { font-size: 15px; margin-top: 28px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+  code { font-family: 'Courier New', monospace; font-size: 13px; background: #f4f4f4; padding: 1px 5px; border-radius: 3px; }
+  pre { background: #f4f4f4; padding: 16px; overflow-x: auto; font-size: 13px; line-height: 1.6; border-left: 3px solid #aaa; }
+  pre code { background: none; padding: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th { background: #222; color: #fff; padding: 8px 12px; text-align: left; }
+  td { padding: 8px 12px; border-bottom: 1px solid #ddd; vertical-align: top; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .note { background: #fffbe6; border-left: 4px solid #f0c040; padding: 10px 14px; margin: 16px 0; font-size: 14px; }
+  .warn { background: #fff0f0; border-left: 4px solid #e04040; padding: 10px 14px; margin: 16px 0; font-size: 14px; }
+  nav { background: #f4f4f4; padding: 16px 20px; margin-bottom: 40px; font-size: 14px; }
+  nav ul { margin: 0; padding-left: 20px; }
+  nav li { margin: 4px 0; }
+  nav a { color: #222; }
+
+  /* Language toggle */
+  #lang-btn { position: fixed; top: 16px; right: 16px; padding: 5px 14px; font-size: 13px; font-weight: 700; background: #222; color: #fff; border: none; cursor: pointer; letter-spacing: .05em; }
+  #lang-btn:hover { background: #444; }
+  .en { display: none; }
+  body.lang-en .ja { display: none; }
+  body.lang-en span.en { display: inline; }
+  body.lang-en p.en, body.lang-en h1.en, body.lang-en h2.en, body.lang-en h3.en,
+  body.lang-en div.en, body.lang-en li.en, body.lang-en pre.en { display: block; }
+  body.lang-en ul.en { display: block; }
+  body.lang-en tr.en { display: table-row; }
+</style>
+</head>
+<body>
+
+<button id="lang-btn" onclick="toggleLang()">EN</button>
+
+<h1>
+  <span class="ja">Extra English リスニング完全攻略ガイド — 管理者マニュアル</span>
+  <span class="en">Extra English Listening Guide — Admin Manual</span>
+</h1>
+
+<nav>
+  <strong><span class="ja">目次</span><span class="en">Contents</span></strong>
+  <ul>
+    <li><a href="#files"><span class="ja">ファイル構成</span><span class="en">File Structure</span></a></li>
+    <li><a href="#pages"><span class="ja">ページ構成と役割</span><span class="en">Page Structure</span></a></li>
+    <li><a href="#edit-content"><span class="ja">コンテンツの編集</span><span class="en">Editing Content</span></a></li>
+    <li><a href="#youtube"><span class="ja">YouTubeバナーの変更</span><span class="en">YouTube Banner</span></a></li>
+    <li><a href="#add-lesson"><span class="ja">レッスンページの追加</span><span class="en">Adding a Lesson Page</span></a></li>
+    <li><a href="#responsive"><span class="ja">レスポンシブレイアウト</span><span class="en">Responsive Layout</span></a></li>
+    <li><a href="#notes"><span class="ja">運用上の注意</span><span class="en">Important Notes</span></a></li>
+  </ul>
+</nav>
+
+<!-- ===== FILE STRUCTURE ===== -->
+<h2 id="files">
+  <span class="ja">ファイル構成</span>
+  <span class="en">File Structure</span>
+</h2>
+
+<pre class="ja"><code>002_ExtraEnglish-ListeningPoints/
+├── document/
+│   └── Extra English 学習ポイント・リスニングポイント.pdf  ← 原稿PDF（コンテンツの正本）
+├── design/
+│   └── design_sp.pen   ← Pencilデザインファイル（SP/タブレット/PC）
+├── manual/
+│   └── manual.html     ← このファイル
+└── page/               ← 本体（静的HTML、19ファイル）
+    ├── style.css        ← 全ページ共通スタイル
+    ├── js/
+    │   └── yt-banner.js ← YouTubeバナー設定（全ページ共通）
+    ├── index.html       ← トップ（月選択）
+    ├── month1.html      ← Month 1 レッスン一覧
+    ├── month2.html      ← Month 2 レッスン一覧
+    ├── month3.html      ← Month 3 レッスン一覧
+    ├── list.html        ← 全ポイント一覧（復習用）
+    ├── m1-1.html ～ m1-4.html   ← Month 1 日別ページ
+    ├── m2-1.html ～ m2-4.html   ← Month 2 日別ページ
+    └── m3-1.html ～ m3-6.html   ← Month 3 日別ページ</code></pre>
+
+<pre class="en"><code>002_ExtraEnglish-ListeningPoints/
+├── document/
+│   └── Extra English 学習ポイント・リスニングポイント.pdf  ← Source PDF (canonical content)
+├── design/
+│   └── design_sp.pen   ← Pencil design file (SP / Tablet / PC)
+├── manual/
+│   └── manual.html     ← This file
+└── page/               ← App files (static HTML, 19 files)
+    ├── style.css        ← Shared styles for all pages
+    ├── js/
+    │   └── yt-banner.js ← YouTube banner config (all pages)
+    ├── index.html       ← Top page (month selection)
+    ├── month1.html      ← Month 1 lesson list
+    ├── month2.html      ← Month 2 lesson list
+    ├── month3.html      ← Month 3 lesson list
+    ├── list.html        ← Full review list
+    ├── m1-1.html ～ m1-4.html   ← Month 1 day pages
+    ├── m2-1.html ～ m2-4.html   ← Month 2 day pages
+    └── m3-1.html ～ m3-6.html   ← Month 3 day pages</code></pre>
+
+<p class="ja">ビルド不要。静的HTMLです。Webサーバーに <code>page/</code> フォルダをそのまま置くだけで動作します。</p>
+<p class="en">No build step required. Pure static HTML. Upload the <code>page/</code> folder to any web server.</p>
+
+<!-- ===== PAGE STRUCTURE ===== -->
+<h2 id="pages">
+  <span class="ja">ページ構成と役割</span>
+  <span class="en">Page Structure</span>
+</h2>
+
+<table>
+  <tr>
+    <th><span class="ja">ページ</span><span class="en">Page</span></th>
+    <th><span class="ja">ファイル</span><span class="en">File</span></th>
+    <th><span class="ja">役割</span><span class="en">Role</span></th>
+  </tr>
+  <tr>
+    <td><span class="ja">トップ</span><span class="en">Top</span></td>
+    <td><code>index.html</code></td>
+    <td><span class="ja">Month 1/2/3 選択カード + 全一覧リンク</span><span class="en">Month 1/2/3 selection + link to full list</span></td>
+  </tr>
+  <tr>
+    <td><span class="ja">月別</span><span class="en">Month</span></td>
+    <td><code>month1–3.html</code></td>
+    <td><span class="ja">各月のレッスン一覧カード</span><span class="en">Lesson list cards for each month</span></td>
+  </tr>
+  <tr>
+    <td><span class="ja">日別</span><span class="en">Day</span></td>
+    <td><code>m1-1.html</code> <span class="ja">など</span><span class="en">etc.</span></td>
+    <td><span class="ja">学習ポイント（アコーディオン）+ リスニングポイント + YouTubeバナー + 前後ナビ</span><span class="en">Learning points (accordion) + Listening points + YouTube banner + prev/next nav</span></td>
+  </tr>
+  <tr>
+    <td><span class="ja">全一覧</span><span class="en">Full List</span></td>
+    <td><code>list.html</code></td>
+    <td><span class="ja">全リスニング・学習ポイントを月別フィルターつきで一覧表示</span><span class="en">All listening and learning points with month filter</span></td>
+  </tr>
+</table>
+
+<h3>
+  <span class="ja">日別ページのDay番号対応表</span>
+  <span class="en">Day page mapping</span>
+</h3>
+
+<table>
+  <tr>
+    <th><span class="ja">ファイル</span><span class="en">File</span></th>
+    <th><span class="ja">対象Day</span><span class="en">Days</span></th>
+    <th><span class="ja">学習ポイント数</span><span class="en">Learning pts</span></th>
+    <th><span class="ja">リスニングポイント数</span><span class="en">Listening pts</span></th>
+  </tr>
+  <tr><td><code>m1-1.html</code></td><td>Day 1〜4</td><td>4</td><td>4</td></tr>
+  <tr><td><code>m1-2.html</code></td><td>Day 8〜11</td><td>6</td><td>3</td></tr>
+  <tr><td><code>m1-3.html</code></td><td>Day 15〜18</td><td>9</td><td>12</td></tr>
+  <tr><td><code>m1-4.html</code></td><td>Day 22〜29</td><td>5</td><td>5</td></tr>
+  <tr><td><code>m2-1.html</code></td><td>Day 3〜10</td><td>4</td><td>3</td></tr>
+  <tr><td><code>m2-2.html</code></td><td>Day 17〜20</td><td>6</td><td>4</td></tr>
+  <tr><td><code>m2-3.html</code></td><td>Day 20〜27</td><td>11</td><td>3</td></tr>
+  <tr><td><code>m2-4.html</code></td><td>Day 31</td><td>2</td><td>2</td></tr>
+  <tr><td><code>m3-1.html</code></td><td>Day 11</td><td>7</td><td>8</td></tr>
+  <tr><td><code>m3-2.html</code></td><td>Day 15</td><td>16</td><td>13</td></tr>
+  <tr><td><code>m3-3.html</code></td><td>Day 18</td><td>4</td><td>7</td></tr>
+  <tr><td><code>m3-4.html</code></td><td>Day 22</td><td>5</td><td>1</td></tr>
+  <tr><td><code>m3-5.html</code></td><td>Day 25</td><td>5</td><td>2</td></tr>
+  <tr><td><code>m3-6.html</code></td><td>Day 29〜32</td><td>5</td><td>4</td></tr>
+</table>
+
+<!-- ===== EDITING CONTENT ===== -->
+<h2 id="edit-content">
+  <span class="ja">コンテンツの編集</span>
+  <span class="en">Editing Content</span>
+</h2>
+
+<p class="ja">コンテンツの正本は <code>document/Extra English 学習ポイント・リスニングポイント.pdf</code> です。HTMLを編集する際は必ずPDFと照合してください。</p>
+<p class="en">The canonical content source is <code>document/Extra English 学習ポイント・リスニングポイント.pdf</code>. Always cross-reference this PDF when editing HTML.</p>
+
+<h3>
+  <span class="ja">学習ポイントの構造</span>
+  <span class="en">Learning point structure</span>
+</h3>
+
+<p class="ja">各日別ページの学習ポイントは <code>&lt;details&gt;/&lt;summary&gt;</code> によるネイティブアコーディオンです。JavaScript不要。</p>
+<p class="en">Learning points use native <code>&lt;details&gt;/&lt;summary&gt;</code> accordions. No JavaScript required.</p>
+
+<pre><code>&lt;details class="learn-item"&gt;
+  &lt;summary&gt;
+    &lt;span class="learn-num"&gt;1&lt;/span&gt;
+    &lt;div class="learn-summary-text"&gt;
+      &lt;span class="learn-phrase"&gt;I told you.&lt;/span&gt;  &lt;!-- 常時表示 --&gt;
+      &lt;div class="learn-jp"&gt;昨日言ったでしょ&lt;/div&gt;    &lt;!-- 常時表示 --&gt;
+    &lt;/div&gt;
+    &lt;span class="learn-arrow"&gt;▼&lt;/span&gt;
+  &lt;/summary&gt;
+  &lt;div class="learn-body"&gt;
+    &lt;div class="learn-desc"&gt;tell + 人 で「人に言う」&lt;/div&gt;  &lt;!-- 開いたとき --&gt;
+    &lt;div class="learn-examples"&gt;
+      &lt;div class="learn-ex"&gt;I told you last night.&lt;/div&gt;
+      &lt;div class="learn-ex-jp"&gt;昨夜言ったじゃない&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/details&gt;</code></pre>
+
+<table>
+  <tr>
+    <th><span class="ja">クラス</span><span class="en">Class</span></th>
+    <th><span class="ja">表示タイミング</span><span class="en">Visibility</span></th>
+    <th><span class="ja">内容</span><span class="en">Content</span></th>
+  </tr>
+  <tr><td><code>.learn-phrase</code></td><td><span class="ja">常時</span><span class="en">Always</span></td><td><span class="ja">英語フレーズ</span><span class="en">English phrase</span></td></tr>
+  <tr><td><code>.learn-jp</code>（summary内）</td><td><span class="ja">常時</span><span class="en">Always</span></td><td><span class="ja">日本語訳</span><span class="en">Japanese translation</span></td></tr>
+  <tr><td><code>.learn-desc</code></td><td><span class="ja">展開後</span><span class="en">When open</span></td><td><span class="ja">文法説明・補足</span><span class="en">Grammar / notes</span></td></tr>
+  <tr><td><code>.learn-ex</code></td><td><span class="ja">展開後</span><span class="en">When open</span></td><td><span class="ja">例文（英語）</span><span class="en">Example sentence (English)</span></td></tr>
+  <tr><td><code>.learn-ex-jp</code></td><td><span class="ja">展開後</span><span class="en">When open</span></td><td><span class="ja">例文の日本語訳</span><span class="en">Example sentence (Japanese)</span></td></tr>
+</table>
+
+<h3>
+  <span class="ja">リスニングポイントの構造</span>
+  <span class="en">Listening point structure</span>
+</h3>
+
+<p class="ja">リスニングポイントは常時表示のシンプルなリストです。</p>
+<p class="en">Listening points are a simple always-visible list.</p>
+
+<pre><code>&lt;div class="listen-card"&gt;
+  &lt;div class="listen-item"&gt;
+    &lt;div class="listen-en"&gt;Did you&lt;/div&gt;          &lt;!-- 英語フレーズ --&gt;
+    &lt;div class="listen-kana"&gt;ディジュ&lt;/div&gt;        &lt;!-- カタカナ発音 --&gt;
+    &lt;div class="listen-note"&gt;d が弱くなる&lt;/div&gt;    &lt;!-- 変化の説明（任意）--&gt;
+    &lt;div class="listen-example"&gt;Did you get it?&lt;/div&gt; &lt;!-- 例文（任意）--&gt;
+  &lt;/div&gt;
+  ...
+&lt;/div&gt;</code></pre>
+
+<div class="note ja"><code>.listen-note</code> と <code>.listen-example</code> は省略可です。フレーズとカタカナだけでも成立します。</div>
+<div class="note en"><code>.listen-note</code> and <code>.listen-example</code> are optional. Phrase + kana alone is sufficient.</div>
+
+<h3>
+  <span class="ja">list.html（全一覧ページ）の編集</span>
+  <span class="en">Editing list.html (full review page)</span>
+</h3>
+
+<p class="ja"><code>list.html</code> は各日別ページと<strong>独立したコンテンツ</strong>を持ちます。日別ページを変更した場合は <code>list.html</code> も同じ内容に更新してください。</p>
+<p class="en"><code>list.html</code> holds <strong>independent copies</strong> of all content. If you update a day page, update <code>list.html</code> with the same changes.</p>
+
+<div class="warn ja"><strong>同期忘れに注意。</strong>日別ページと <code>list.html</code> は自動同期されません。片方だけ変更すると内容がズレます。</div>
+<div class="warn en"><strong>Manual sync required.</strong> Day pages and <code>list.html</code> are not automatically synced. Editing one without the other causes content inconsistency.</div>
+
+<!-- ===== YOUTUBE BANNER ===== -->
+<h2 id="youtube">
+  <span class="ja">YouTubeバナーの変更</span>
+  <span class="en">YouTube Banner</span>
+</h2>
+
+<p class="ja">全19ページのYouTubeバナーは <code>page/js/yt-banner.js</code> <strong>1ファイルだけ</strong>で管理しています。チャンネルを変更する場合はここだけ編集してください。</p>
+<p class="en">The YouTube banner across all 19 pages is managed in a <strong>single file</strong>: <code>page/js/yt-banner.js</code>. Edit only this file to update the channel.</p>
+
+<pre><code>var YT = {
+  channelUrl:   "https://www.youtube.com/@SoCal",       // チャンネルURL
+  channelHandle:"@SoCal",                                // ハンドル（@〜）
+  channelName:  "SoCal",                                 // チャンネル名
+  avatarUrl:    "https://yt3.googleusercontent.com/...", // アイコン画像URL
+  bannerUrl:    "https://yt3.googleusercontent.com/...", // バナー画像URL
+  label:        "英語コーチChikara",                     // バナー内タイトル
+  note:         "10,000人以上の日本人を..."              // バナー下説明文
+};</code></pre>
+
+<p class="ja">バナーの構成は上下2段です。</p>
+<p class="en">The banner has two sections:</p>
+<ul class="ja">
+  <li>上段：チャンネルバナー画像（背景）</li>
+  <li>下段：アバター画像 + タイトル + ハンドル（白背景）</li>
+</ul>
+<ul class="en">
+  <li>Top: channel banner image (background)</li>
+  <li>Bottom: avatar + title + handle (white background)</li>
+</ul>
+
+<p class="ja">クリックすると別ウィンドウ（<code>target="_blank"</code>）でチャンネルが開きます。</p>
+<p class="en">Clicking opens the channel in a new window (<code>target="_blank"</code>).</p>
+
+<h3>
+  <span class="ja">画像URLの取得方法</span>
+  <span class="en">How to get image URLs</span>
+</h3>
+<p class="ja">YouTubeはページをJavaScriptで動的生成するため、自動取得は困難です。ブラウザで以下の手順で取得してください。</p>
+<p class="en">YouTube pages are dynamically generated, so automatic URL extraction is not reliable. Use your browser:</p>
+<ol class="ja">
+  <li>チャンネルページ（<code>https://www.youtube.com/@チャンネル名</code>）を開く</li>
+  <li>バナー画像 or アイコン画像を右クリック →「画像アドレスをコピー」</li>
+  <li><code>yt-banner.js</code> の対応するURLを置き換える</li>
+</ol>
+<ol class="en">
+  <li>Open the channel page (<code>https://www.youtube.com/@channelname</code>)</li>
+  <li>Right-click the banner or icon image → "Copy image address"</li>
+  <li>Replace the corresponding URL in <code>yt-banner.js</code></li>
+</ol>
+
+<!-- ===== ADDING A LESSON PAGE ===== -->
+<h2 id="add-lesson">
+  <span class="ja">レッスンページの追加</span>
+  <span class="en">Adding a Lesson Page</span>
+</h2>
+
+<p class="ja">新しい日別ページを追加する手順です。例として Month 4 Lesson 1（<code>m4-1.html</code>）を追加します。</p>
+<p class="en">Steps to add a new day page. Example: adding Month 4 Lesson 1 (<code>m4-1.html</code>).</p>
+
+<h3>
+  <span class="ja">① 既存ページをコピーして作成する</span>
+  <span class="en">① Copy an existing page</span>
+</h3>
+<p class="ja">最も近い構成のページ（例：<code>m3-6.html</code>）をコピーして <code>m4-1.html</code> にリネームします。</p>
+<p class="en">Copy the closest existing page (e.g. <code>m3-6.html</code>) and rename it to <code>m4-1.html</code>.</p>
+
+<h3>
+  <span class="ja">② ヘッダーとサブヘッダーを書き換える</span>
+  <span class="en">② Update header and subheader</span>
+</h3>
+<pre><code>&lt;!-- title --&gt;
+&lt;title&gt;Month 4 Day 1〜4 | Extra English&lt;/title&gt;
+
+&lt;!-- ヘッダー --&gt;
+&lt;a href="month4.html" class="back-btn"&gt;‹&lt;/a&gt;
+&lt;div class="header-title"&gt;Month 4 · レッスン 1&lt;/div&gt;
+
+&lt;!-- Dayバッジ --&gt;
+&lt;span class="day-badge"&gt;Day 1〜4&lt;/span&gt;
+
+&lt;!-- YouTubeバナー --&gt;
+&lt;div class="yt-banner" data-day="Month 4 Day 1〜4"&gt;&lt;/div&gt;</code></pre>
+
+<h3>
+  <span class="ja">③ コンテンツを書き換える</span>
+  <span class="en">③ Replace content</span>
+</h3>
+<p class="ja">PDFの該当箇所を参照して、<code>.listen-card</code> 内のリスニングポイントと <code>.accordion-list</code> 内の学習ポイントを書き換えます。</p>
+<p class="en">Referring to the PDF, replace the listening points in <code>.listen-card</code> and the learning points in <code>.accordion-list</code>.</p>
+
+<h3>
+  <span class="ja">④ ナビゲーションを設定する</span>
+  <span class="en">④ Set navigation</span>
+</h3>
+<pre><code>&lt;div class="page-nav"&gt;
+  &lt;a href="m3-6.html" class="nav-btn nav-prev"&gt;‹ 前へ&lt;/a&gt;  &lt;!-- 前のページ --&gt;
+  &lt;span class="nav-btn nav-next disabled"&gt;次へ ›&lt;/span&gt;    &lt;!-- 次がない場合 --&gt;
+&lt;/div&gt;</code></pre>
+
+<h3>
+  <span class="ja">⑤ 月別ページ（month4.html）にカードを追加する</span>
+  <span class="en">⑤ Add a card to the month page</span>
+</h3>
+<pre><code>&lt;div class="lesson-grid"&gt;
+  &lt;a href="m4-1.html" class="lesson-card"&gt;
+    &lt;div class="lesson-num"&gt;1&lt;/div&gt;
+    &lt;div class="lesson-card-body"&gt;
+      &lt;div class="lesson-card-day"&gt;Day 1〜4&lt;/div&gt;
+      &lt;div class="lesson-card-title"&gt;I told you / Come on ...&lt;/div&gt;
+      &lt;div class="lesson-card-count"&gt;学習X点 ｜ リスニングX点&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="lesson-card-arrow"&gt;›&lt;/div&gt;
+  &lt;/a&gt;
+&lt;/div&gt;</code></pre>
+
+<h3>
+  <span class="ja">⑥ list.html に内容を追加する</span>
+  <span class="en">⑥ Add content to list.html</span>
+</h3>
+<p class="ja"><code>list.html</code> の Month 4 グループ（<code>data-month="m4"</code>）に同じリスニング・学習ポイントを追加します。フィルターボタンも必要なら追加してください。</p>
+<p class="en">Add the same content to a Month 4 group (<code>data-month="m4"</code>) in <code>list.html</code>. Add a filter button if needed.</p>
+
+<!-- ===== RESPONSIVE LAYOUT ===== -->
+<h2 id="responsive">
+  <span class="ja">レスポンシブレイアウト</span>
+  <span class="en">Responsive Layout</span>
+</h2>
+
+<p class="ja">モバイルファースト設計です。<code>style.css</code> の末尾に2つのブレークポイントが定義されています。</p>
+<p class="en">Mobile-first design. Two breakpoints are defined at the bottom of <code>style.css</code>.</p>
+
+<table>
+  <tr>
+    <th><span class="ja">ブレークポイント</span><span class="en">Breakpoint</span></th>
+    <th><span class="ja">対象</span><span class="en">Target</span></th>
+    <th><span class="ja">コンテンツ幅</span><span class="en">Content width</span></th>
+  </tr>
+  <tr><td><span class="ja">〜599px（SP）</span><span class="en">〜599px (SP)</span></td><td><span class="ja">スマートフォン</span><span class="en">Smartphone</span></td><td>480px <span class="ja">最大</span><span class="en">max</span></td></tr>
+  <tr><td><span class="ja">600px〜（タブレット）</span><span class="en">600px+ (Tablet)</span></td><td><span class="ja">タブレット</span><span class="en">Tablet</span></td><td>700px <span class="ja">最大</span><span class="en">max</span></td></tr>
+  <tr><td><span class="ja">1024px〜（PC）</span><span class="en">1024px+ (PC)</span></td><td><span class="ja">デスクトップ</span><span class="en">Desktop</span></td><td>960px <span class="ja">最大</span><span class="en">max</span></td></tr>
+</table>
+
+<h3>
+  <span class="ja">日別ページの2カラム構造</span>
+  <span class="en">Two-column layout on day pages</span>
+</h3>
+<p class="ja">SP は縦積み、タブレット以上は左：学習ポイント／右：リスニングポイントの2カラムになります。</p>
+<p class="en">SP stacks vertically; tablet+ shows a 2-column layout: learning (left) / listening (right).</p>
+
+<pre><code>&lt;div class="day-cols"&gt;
+  &lt;div class="day-col-left"&gt;   &lt;!-- リスニングポイント（DOM上は先頭）--&gt;
+    ...
+  &lt;/div&gt;
+  &lt;div class="day-col-right"&gt;  &lt;!-- 学習ポイント（CSS order:-1 で常に左表示）--&gt;
+    ...
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+<div class="note ja"><strong>表示順について：</strong>学習ポイントは CSS の <code>order: -1</code> によって常に左（SP では上）に表示されます。DOM 上の順序（<code>day-col-left</code> が先）は変えないでください。</div>
+<div class="note en"><strong>Display order:</strong> Learning points always appear left (or top on SP) via CSS <code>order: -1</code>. Do not change the DOM order (<code>day-col-left</code> first).</div>
+
+<!-- ===== IMPORTANT NOTES ===== -->
+<h2 id="notes">
+  <span class="ja">運用上の注意</span>
+  <span class="en">Important Notes</span>
+</h2>
+
+<h3>
+  <span class="ja">検索エンジンへの非表示設定</span>
+  <span class="en">Search engine exclusion</span>
+</h3>
+<p class="ja">全ページに以下が設定されており、検索エンジンにインデックスされません。意図的な設定です。変更しないでください。</p>
+<p class="en">All pages include the following tag to prevent search engine indexing. This is intentional — do not remove it.</p>
+<pre><code>&lt;meta name="robots" content="noindex,nofollow"&gt;</code></pre>
+
+<h3>
+  <span class="ja">右クリック禁止</span>
+  <span class="en">Right-click disabled</span>
+</h3>
+<p class="ja">右クリック（コンテキストメニュー）は <code>yt-banner.js</code> 内のイベントリスナーで全ページ無効化されています。意図的な設定です。</p>
+<p class="en">Right-click (context menu) is disabled on all pages via an event listener in <code>yt-banner.js</code>. This is intentional.</p>
+<pre><code>document.addEventListener("contextmenu", function(e) { e.preventDefault(); });</code></pre>
+
+<h3>
+  <span class="ja">コンテンツの変更・削除について</span>
+  <span class="en">Modifying or removing content</span>
+</h3>
+<div class="warn ja">
+  <strong>原稿PDFが正本です。</strong><br>
+  HTMLのコンテンツを変更・削除する場合は必ずPDFと照合してください。誤りを発見した場合はユーザー（管理者）に確認してから修正してください。
+</div>
+<div class="warn en">
+  <strong>The PDF is the canonical source.</strong><br>
+  Always cross-reference the PDF when editing HTML content. If you find an error, confirm with the administrator before correcting it.
+</div>
+
+<h3>
+  <span class="ja">list.html との同期</span>
+  <span class="en">Syncing with list.html</span>
+</h3>
+<div class="warn ja">
+  <strong>日別ページと list.html は自動同期されません。</strong><br>
+  どちらかを変更した場合は、もう一方も同じ内容に手動で更新してください。
+</div>
+<div class="warn en">
+  <strong>Day pages and list.html are not automatically synced.</strong><br>
+  Any change to one must be manually applied to the other.
+</div>
+
+<script>
+  function toggleLang() {
+    const isEn = document.body.classList.toggle('lang-en');
+    document.getElementById('lang-btn').textContent = isEn ? 'JA' : 'EN';
+    document.documentElement.lang = isEn ? 'en' : 'ja';
+  }
+</script>
+</body>
+</html>
