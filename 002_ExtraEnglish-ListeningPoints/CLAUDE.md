@@ -19,7 +19,7 @@ This directory contains a **static multi-page web app** and design assets for th
 └── page/                          # Static web app (19 HTML pages)
     ├── style.css                  # Shared styles — mobile-first, responsive
     ├── js/
-    │   └── yt-banner.js           # YouTube banner injector + 右クリック禁止
+    │   └── script.js              # 右クリック禁止
     ├── index.html                 # Top page — Month selection
     ├── month1.html                # Month 1 lesson list
     ├── month2.html                # Month 2 lesson list
@@ -91,28 +91,13 @@ Mobile-first。`body` の `max-width: 480px` は 600px 以上で解除。
 - `learn-phrase` + `learn-jp` は **サマリーに常時表示**（タップ前に意味がわかる）
 - `learn-desc` + `learn-examples` は **展開後に表示**
 
-## YouTube Banner (`js/yt-banner.js`)
+## `js/script.js`
 
-全19ページに `<script src="js/yt-banner.js"></script>` が含まれる。チャンネル情報はこのファイルの `YT` オブジェクト1箇所で管理。**チャンネルを変更する場合はここだけ編集すれば全ページに反映される。**
+全19ページに `<script src="js/script.js"></script>` が含まれる。右クリック禁止のみを担当:
 
 ```javascript
-var YT = {
-  channelUrl: "https://www.youtube.com/@SoCal",
-  channelHandle: "@SoCal",
-  channelName: "SoCal",
-  avatarUrl: "https://yt3.googleusercontent.com/ytc/AIdro_m795dTA9jcg-oAFPG9Mv6tQtNG7_n8OQfcR31OjcQ_sN8=s160-c-k-c0x00ffffff-no-rj",
-  bannerUrl: "https://yt3.googleusercontent.com/99NjXrLc0tOULQJeHmVSqX84DlkoriTeKTn7hBvKH6RUpYvW9OCFoHHyZfZefF5P9yQms6E6NQM=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
-  label: "英語コーチChikara",
-  note: "10,000人以上の日本人を英語ペラペラに変えた英語コーチ 横田チカラのYouTube公式チャンネル『SoCal英会話』（ソーカル英会話）"
-};
+document.addEventListener("contextmenu", function(e) { e.preventDefault(); });
 ```
-
-Day ページは `data-day` 属性でエピソードラベルを渡す:
-```html
-<div class="yt-banner" data-day="Month 1 Day 1〜4"></div>
-```
-
-バナー構成: チャンネルバナー画像(上) → アバター + タイトル + ハンドル(白背景・下)。クリックで別ウィンドウ表示。
 
 ## Design Specs (style.css color tokens)
 

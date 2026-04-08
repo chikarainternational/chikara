@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:www.youtube.com)",
-      "Bash(python -)"
+      "Bash(python -)",
+      "Bash(python -c ':*)"
     ]
   }
 }
