@@ -1,6 +1,50 @@
 // 右クリック禁止
 document.addEventListener("contextmenu", function(e) { e.preventDefault(); });
 
+// ===== TTS（Web Speech API）=====
+(function () {
+  if (!window.speechSynthesis) return;
+
+  var TTS_SVG =
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' +
+      '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>' +
+      '<path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>' +
+      '<path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>' +
+    '</svg>';
+
+  // ボタン HTML を生成（day.html / list.html の innerHTML 構築で使用）
+  window.ttsBtnHtml = function (text) {
+    var escaped = String(text || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    return '<button class="tts-btn" data-speak="' + escaped + '" aria-label="読み上げ">' + TTS_SVG + '</button>';
+  };
+
+  // イベント委譲でクリック処理
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.tts-btn');
+    if (!btn) return;
+
+    var text = btn.dataset.speak;
+    if (!text) return;
+
+    window.speechSynthesis.cancel();
+
+    // 発話中インジケーターをリセット
+    document.querySelectorAll('.tts-btn.speaking').forEach(function (b) {
+      b.classList.remove('speaking');
+    });
+
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'en-US';
+    utter.rate = 0.85;
+    btn.classList.add('speaking');
+    utter.onend  = function () { btn.classList.remove('speaking'); };
+    utter.onerror = function () { btn.classList.remove('speaking'); };
+
+    window.speechSynthesis.speak(utter);
+  });
+})();
+
 // ===== 検索オーバーレイ =====
 (function () {
   var headerInner = document.querySelector('.header-inner');

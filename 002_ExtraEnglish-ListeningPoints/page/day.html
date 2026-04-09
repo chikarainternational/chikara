@@ -58,7 +58,7 @@
   html += '<div class="listen-card">';
   lesson.listen.forEach(function (item) {
     html += '<div class="listen-item">';
-    html += '<div class="listen-en">'   + esc(item.en)   + '</div>';
+    html += '<div class="listen-en-row"><div class="listen-en">' + esc(item.en) + '</div>' + (window.ttsBtnHtml ? window.ttsBtnHtml(item.en) : '') + '</div>';
     html += '<div class="listen-kana">' + esc(item.kana) + '</div>';
     if (item.note)    html += '<div class="listen-note">'    + esc(item.note)    + '</div>';
     if (item.example) html += '<div class="listen-example">' + esc(item.example) + '</div>';
