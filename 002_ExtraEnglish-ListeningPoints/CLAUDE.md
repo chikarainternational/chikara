@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This directory contains a **static multi-page web app** and design assets for the **Extra English リスニング完全攻略ガイド** — a 3-month English listening program using the "Extra English" TV series.
+This directory contains a **static web app** and design assets for the **Extra English リスニング完全攻略ガイド** — a 3-month English listening program using the "Extra English" TV series.
 
 ## Directory Structure
 
@@ -16,32 +16,83 @@ This directory contains a **static multi-page web app** and design assets for th
 │   └── Extra English 学習ポイント・リスニングポイント.pdf  # Canonical content source
 ├── manual/
 │   └── manual.html                # Admin manual (JP/EN toggle, bilingual)
-└── page/                          # Static web app (19 HTML pages)
+└── page/                          # Static web app
     ├── style.css                  # Shared styles — mobile-first, responsive
     ├── js/
-    │   └── script.js              # 右クリック禁止
-    ├── index.html                 # Top page — Month selection
-    ├── month1.html                # Month 1 lesson list
-    ├── month2.html                # Month 2 lesson list
-    ├── month3.html                # Month 3 lesson list
-    ├── list.html                  # Full review list (filter by month)
-    ├── m1-1.html … m1-4.html      # Month 1 day pages (Lesson 1–4)
-    ├── m2-1.html … m2-4.html      # Month 2 day pages (Lesson 1–4)
-    └── m3-1.html … m3-6.html      # Month 3 day pages (Lesson 1–6)
+    │   ├── data.js                # 全コンテンツ JSON（単一の真実のソース）
+    │   └── script.js              # 右クリック禁止 + 検索オーバーレイ（全ページ共通）
+    ├── index.html                 # Top page — Month selection (static)
+    ├── month.html                 # Month page — ?m=1|2|3 でルーティング
+    ├── day.html                   # Day page — ?m=1&l=1 でルーティング
+    └── list.html                  # 全一覧 + 月別フィルター（data.js から動的描画）
+```
+
+## アーキテクチャ概要
+
+全コンテンツは `js/data.js` の `DATA` オブジェクト1箇所で管理。
+ページは `data.js` を読み込み JS で動的描画するため、**HTMLファイルは4枚のみ**。
+
+### URL ルーティング
+
+| ページ | URL例 | 説明 |
+|--------|-------|------|
+| Top | `index.html` | 月選択（静的） |
+| Month | `month.html?m=2` | Month 2 レッスン一覧 |
+| Day | `day.html?m=2&l=3` | Month 2 レッスン 3 |
+| List | `list.html` | 全ポイント一覧 + 月フィルター |
+
+### data.js 構造
+
+```js
+var DATA = {
+  months: [
+    {
+      no: 1, name: "Month 1", icon: "📘", iconBg: "m1-bg",
+      desc: "...", meta: "レッスン 4回 ｜ ...",
+      lessons: [
+        {
+          no: 1, day: "Day 1〜4", title: "...",
+          listen: [{ en: "Did you", kana: "ディジュ", note: "", example: "..." }],
+          learn:  [{ phrase: "I told you", jp: "昨日言ったでしょ", desc: "...",
+                     examples: [{ en: "...", jp: "..." }] }]
+        }
+      ]
+    }
+  ]
+}
+```
+
+### コンテンツ追加・変更
+
+**`js/data.js` のみ編集すれば全ページ（day.html / list.html）に即反映される。**
+HTMLファイルは編集不要。
+
+### 全ページ共通機能 (`js/script.js`)
+
+- **右クリック禁止**
+- **検索オーバーレイ**: ヘッダー右端に🔍ボタンを自動挿入。クリックで全コンテンツ横断検索。
+  - 学習ポイント（フレーズ・日本語訳・文法説明・例文）
+  - リスニングポイント（英語・カタカナ・発音ノート）
+  - 結果クリック → `day.html?m=X&l=Y` へ遷移
+
+すべてのページで `data.js` → `script.js` の順に読み込む:
+```html
+<script src="js/data.js"></script>
+<script src="js/script.js"></script>
 ```
 
 ## Page Architecture
 
-| Page | Route | Content |
-|------|-------|---------|
-| Top | `index.html` | Month 1/2/3 selection cards (`.month-grid`) + 全一覧リンク |
-| Month | `month1–3.html` | Lesson day cards (`.lesson-grid`) |
-| Day | `m1-1.html` etc. | 学習ポイント + リスニングポイント (`.day-cols`) + YouTube banner + prev/next nav |
-| List | `list.html` | 全リスニング・学習ポイント、月別フィルター (JS) |
+| Page | Content |
+|------|---------|
+| `index.html` | Month 1/2/3 selection cards (`.month-grid`) + 全一覧リンク |
+| `month.html` | Lesson day cards (`.lesson-grid`) — data.js から描画 |
+| `day.html` | 学習ポイント + リスニングポイント (`.day-cols`) + prev/next nav — data.js から描画 |
+| `list.html` | 全ポイント一覧、月別フィルター — data.js から描画 |
 
 All pages include:
 - `<meta name="robots" content="noindex,nofollow">`
-- Right-click disabled via `yt-banner.js`
+- Right-click disabled via `script.js`
 
 ## Responsive Layout
 
@@ -55,19 +106,19 @@ Mobile-first。`body` の `max-width: 480px` は 600px 以上で解除。
 
 ### HTML wrapper クラス
 
-| クラス | 対象ファイル | 役割 |
-|--------|------------|------|
+| クラス | 対象 | 役割 |
+|--------|------|------|
 | `.month-grid` | `index.html` | 3枚の月カードを囲む（タブレット以上で3列グリッド） |
-| `.lesson-grid` | `month1–3.html` | レッスンカードを囲む（タブレット以上で2列グリッド） |
-| `.day-cols` | `m*-*.html` | 学習・リスニングの2カラムラッパー |
-| `.day-col-left` | `m*-*.html` | リスニングポイント列（DOM上は先頭） |
-| `.day-col-right` | `m*-*.html` | 学習ポイント列（`order: -1` で常に左表示） |
+| `.lesson-grid` | `month.html` | レッスンカードを囲む（タブレット以上で2列グリッド） |
+| `.day-cols` | `day.html` | 学習・リスニングの2カラムラッパー |
+| `.day-col-left` | `day.html` | リスニングポイント列（DOM上は先頭） |
+| `.day-col-right` | `day.html` | 学習ポイント列（`order: -1` で常に左表示） |
 
 **注意:** `.day-col-right`（学習ポイント）は CSS `order: -1` によって常に左側に表示される。DOM 順序は変えないこと。
 
 ## アコーディオン構造（学習ポイント）
 
-`<details>/<summary>` によるネイティブアコーディオン。JavaScript 不要。
+`<details>/<summary>` によるネイティブアコーディオン。`day.html` と `list.html` で動的生成。
 
 ```html
 <details class="learn-item">
@@ -91,14 +142,6 @@ Mobile-first。`body` の `max-width: 480px` は 600px 以上で解除。
 - `learn-phrase` + `learn-jp` は **サマリーに常時表示**（タップ前に意味がわかる）
 - `learn-desc` + `learn-examples` は **展開後に表示**
 
-## `js/script.js`
-
-全19ページに `<script src="js/script.js"></script>` が含まれる。右クリック禁止のみを担当:
-
-```javascript
-document.addEventListener("contextmenu", function(e) { e.preventDefault(); });
-```
-
 ## Design Specs (style.css color tokens)
 
 | Role | Hex |
@@ -110,7 +153,6 @@ document.addEventListener("contextmenu", function(e) { e.preventDefault(); });
 | Cyan light | `#CAF0F8` / `#48CAE4` |
 | Accent amber | `#FFB703` |
 | Card bg | `#FFFFFF` |
-| YouTube red | `#FF0000` |
 
 ## Working with the Pencil Design File
 
@@ -153,10 +195,9 @@ SP フレームレイアウト:
 1. ファイル構成
 2. ページ構成と役割
 3. コンテンツの編集（学習ポイント・リスニングポイント）
-4. YouTube バナーの変更
-5. レッスンページの追加手順
-6. レスポンシブレイアウトの仕様
-7. 運用上の注意
+4. レッスンページの追加手順
+5. レスポンシブレイアウトの仕様
+6. 運用上の注意
 
 スタイルは `001_CG-Pronunciation-Lesson/manual/manual.html` と同一パターン（スタンドアロン HTML、インライン CSS/JS）。
 

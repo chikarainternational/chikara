@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extra English</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a id="back-btn" href="index.html" class="back-btn">‹</a>
+    <div class="header-titles">
+      <div id="header-title" class="header-title"></div>
+      <div class="header-sub">Extra English リスニング完全攻略</div>
+    </div>
+  </div>
+</header>
+<div class="day-subheader">
+  <span id="day-badge" class="day-badge"></span>
+</div>
+
+<div class="content">
+  <div id="day-content"></div>
+  <div id="page-nav" class="page-nav"></div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/script.js"></script>
+<script>
+(function () {
+  function esc(s) {
+    return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  var params = new URLSearchParams(window.location.search);
+  var mNo = parseInt(params.get('m'), 10) || 1;
+  var lNo = parseInt(params.get('l'), 10) || 1;
+
+  var month = DATA.months[mNo - 1];
+  if (!month) { document.body.innerHTML = '<p style="padding:32px">ページが見つかりません</p>'; return; }
+  var lesson = month.lessons[lNo - 1];
+  if (!lesson) { document.body.innerHTML = '<p style="padding:32px">ページが見つかりません</p>'; return; }
+
+  document.title = month.name + ' ' + lesson.day + ' | Extra English';
+  document.getElementById('header-title').textContent = month.name + ' · レッスン ' + lNo;
+  document.getElementById('day-badge').textContent = lesson.day;
+  document.getElementById('back-btn').href = 'month.html?m=' + mNo;
+
+  // ---------- コンテンツ描画 ----------
+  var html = '<div class="day-cols">';
+
+  // リスニングポイント（col-left）
+  html += '<div class="day-col-left">';
+  html += '<div class="section-row"><span class="section-icon">🎧</span><span class="section-text">リスニングポイント</span><div class="section-line"></div></div>';
+  html += '<div class="listen-card">';
+  lesson.listen.forEach(function (item) {
+    html += '<div class="listen-item">';
+    html += '<div class="listen-en">'   + esc(item.en)   + '</div>';
+    html += '<div class="listen-kana">' + esc(item.kana) + '</div>';
+    if (item.note)    html += '<div class="listen-note">'    + esc(item.note)    + '</div>';
+    if (item.example) html += '<div class="listen-example">' + esc(item.example) + '</div>';
+    html += '</div>';
+  });
+  html += '</div></div>';
+
+  // 学習ポイント（col-right）
+  html += '<div class="day-col-right">';
+  html += '<div class="section-row"><span class="section-icon">📖</span><span class="section-text">学習ポイント</span><div class="section-line"></div></div>';
+  html += '<div class="accordion-list">';
+  lesson.learn.forEach(function (item, i) {
+    html += '<details class="learn-item">';
+    html += '<summary>';
+    html += '<span class="learn-num">' + (i + 1) + '</span>';
+    html += '<div class="learn-summary-text"><span class="learn-phrase">' + esc(item.phrase) + '</span><div class="learn-jp">' + esc(item.jp) + '</div></div>';
+    html += '<span class="learn-arrow">▼</span>';
+    html += '</summary>';
+    html += '<div class="learn-body">';
+    if (item.desc) html += '<div class="learn-desc">' + esc(item.desc).replace(/\n/g, '<br>') + '</div>';
+    if (item.examples.length) {
+      html += '<div class="learn-examples">';
+      item.examples.forEach(function (ex) {
+        html += '<div class="learn-ex">' + esc(ex.en) + '</div>';
+        if (ex.jp) html += '<div class="learn-ex-jp">' + esc(ex.jp) + '</div>';
+      });
+      html += '</div>';
+    }
+    html += '</div></details>';
+  });
+  html += '</div></div>';
+  html += '</div>'; // day-cols
+
+  document.getElementById('day-content').innerHTML = html;
+
+  // ---------- ナビゲーション ----------
+  var prevM = mNo, prevL = lNo - 1;
+  if (prevL < 1) {
+    prevM = mNo - 1;
+    if (prevM >= 1) prevL = DATA.months[prevM - 1].lessons.length;
+  }
+  var nextM = mNo, nextL = lNo + 1;
+  if (nextL > month.lessons.length) {
+    nextM = mNo + 1;
+    nextL = 1;
+  }
+
+  var navHtml = '';
+  if (prevM >= 1 && prevL >= 1) {
+    navHtml += '<a href="day.html?m=' + prevM + '&l=' + prevL + '" class="nav-btn nav-prev">‹ 前へ</a>';
+  } else {
+    navHtml += '<span class="nav-btn nav-prev disabled">‹ 前へ</span>';
+  }
+  if (nextM <= DATA.months.length) {
+    navHtml += '<a href="day.html?m=' + nextM + '&l=' + nextL + '" class="nav-btn nav-next">次へ ›</a>';
+  } else {
+    navHtml += '<span class="nav-btn nav-next disabled">次へ ›</span>';
+  }
+  document.getElementById('page-nav').innerHTML = navHtml;
+
+  // 最終レッスン：完了カード
+  if (nextM > DATA.months.length) {
+    document.getElementById('page-nav').insertAdjacentHTML('afterend',
+      '<p class="note-sm">🎉 Month 3 全レッスン完了！　一覧ページで復習しましょう。</p>' +
+      '<a href="list.html" class="list-card" style="margin-top:0">' +
+        '<div class="list-card-icon">📋</div>' +
+        '<div class="list-card-body"><div class="list-card-title">全一覧で復習する</div><div class="list-card-sub">全ポイントをまとめて確認</div></div>' +
+        '<div class="list-card-arrow">›</div>' +
+      '</a>'
+    );
+  }
+})();
+</script>
+</body>
+</html>
