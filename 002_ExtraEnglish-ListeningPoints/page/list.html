@@ -80,23 +80,31 @@ function renderList() {
     var num = 1;
     month.lessons.forEach(function (lesson) {
       lesson.learn.forEach(function (item) {
-        html += '<details class="learn-item">';
-        html += '<summary>';
-        html += '<span class="learn-num">' + num++ + '</span>';
-        html += '<div class="learn-summary-text"><span class="learn-phrase">' + esc(item.phrase) + '</span><div class="learn-jp">' + esc(item.jp) + '</div></div>';
-        html += '<span class="learn-arrow">▼</span>';
-        html += '</summary>';
-        html += '<div class="learn-body">';
-        if (item.desc) html += '<div class="learn-desc">' + esc(item.desc).replace(/\n/g, '<br>') + '</div>';
-        if (item.examples.length) {
-          html += '<div class="learn-examples">';
-          item.examples.forEach(function (ex) {
-            html += '<div class="learn-ex">' + esc(ex.en) + '</div>';
-            if (ex.jp) html += '<div class="learn-ex-jp">' + esc(ex.jp) + '</div>';
-          });
+        var hasBody = item.desc || item.examples.length;
+        if (hasBody) {
+          html += '<details class="learn-item">';
+          html += '<summary>';
+          html += '<span class="learn-num">' + num++ + '</span>';
+          html += '<div class="learn-summary-text"><span class="learn-phrase">' + esc(item.phrase) + '</span><div class="learn-jp">' + esc(item.jp) + '</div></div>';
+          html += '<span class="learn-arrow">▼</span>';
+          html += '</summary>';
+          html += '<div class="learn-body">';
+          if (item.desc) html += '<div class="learn-desc">' + esc(item.desc).replace(/\n/g, '<br>') + '</div>';
+          if (item.examples.length) {
+            html += '<div class="learn-examples">';
+            item.examples.forEach(function (ex) {
+              html += '<div class="learn-ex">' + esc(ex.en) + '</div>';
+              if (ex.jp) html += '<div class="learn-ex-jp">' + esc(ex.jp) + '</div>';
+            });
+            html += '</div>';
+          }
+          html += '</div></details>';
+        } else {
+          html += '<div class="learn-item learn-item-plain">';
+          html += '<span class="learn-num">' + num++ + '</span>';
+          html += '<div class="learn-summary-text"><span class="learn-phrase">' + esc(item.phrase) + '</span><div class="learn-jp">' + esc(item.jp) + '</div></div>';
           html += '</div>';
         }
-        html += '</div></details>';
       });
     });
     html += '</div></div>';
