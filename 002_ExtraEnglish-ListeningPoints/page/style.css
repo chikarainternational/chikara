@@ -245,6 +245,11 @@ button { font-family: inherit; cursor: pointer; }
 /* =============================================
    LESSON CARD (month pages)
    ============================================= */
+.lesson-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 .lesson-card {
   display: flex;
   align-items: center;

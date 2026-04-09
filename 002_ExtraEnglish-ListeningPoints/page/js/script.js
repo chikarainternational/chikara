@@ -107,9 +107,7 @@ document.addEventListener("contextmenu", function(e) { e.preventDefault(); });
     DATA.months.forEach(function (month) {
       month.lessons.forEach(function (lesson) {
         lesson.learn.forEach(function (item) {
-          var text = [item.phrase, item.jp, item.desc || '']
-            .concat(item.examples.map(function (e) { return e.en + ' ' + (e.jp || ''); }))
-            .join(' ').toLowerCase();
+          var text = [item.phrase, item.jp].join(' ').toLowerCase();
           if (text.indexOf(q) >= 0) {
             results.push({ type: 'learn', phrase: item.phrase, jp: item.jp, month: month.no, lesson: lesson.no, day: lesson.day });
           }
