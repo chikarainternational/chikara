@@ -23,7 +23,6 @@
   <div id="month-hero-icon" class="month-hero-icon"></div>
   <div>
     <div id="month-hero-name" class="month-hero-name"></div>
-    <div id="month-hero-sub"  class="month-hero-sub"></div>
   </div>
 </div>
 
@@ -54,7 +53,6 @@
   document.getElementById('header-title').textContent = month.name;
   document.getElementById('month-hero-icon').textContent = month.icon;
   document.getElementById('month-hero-name').textContent = month.name;
-  document.getElementById('month-hero-sub').textContent  = month.meta;
 
   var html = '';
   month.lessons.forEach(function (lesson) {
@@ -64,7 +62,6 @@
         '<div class="lesson-card-body">' +
           '<div class="lesson-card-day">'   + lesson.day   + '</div>' +
           '<div class="lesson-card-title">' + lesson.title + '</div>' +
-          '<div class="lesson-card-count">学習' + lesson.learn.length + '点 ｜ リスニング' + lesson.listen.length + '点</div>' +
         '</div>' +
         '<div class="lesson-card-arrow">›</div>' +
       '</a>';
