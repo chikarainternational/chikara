@@ -20,7 +20,7 @@ This directory contains a **static web app** and design assets for the **Extra E
     ├── style.css                  # Shared styles — mobile-first, responsive
     ├── js/
     │   ├── data.js                # 全コンテンツ JSON（単一の真実のソース）
-    │   └── script.js              # 右クリック禁止 + 検索オーバーレイ（全ページ共通）
+    │   └── script.js              # 右クリック禁止 + 検索オーバーレイ + 音声読み上げ TTS（全ページ共通）
     ├── index.html                 # Top page — Month selection (static)
     ├── month.html                 # Month page — ?m=1|2|3 でルーティング
     ├── day.html                   # Day page — ?m=1&l=1 でルーティング
@@ -74,6 +74,11 @@ HTMLファイルは編集不要。
   - 学習ポイント（フレーズ・日本語訳・文法説明・例文）
   - リスニングポイント（英語・カタカナ・発音ノート）
   - 結果クリック → `day.html?m=X&l=Y` へ遷移
+- **音声読み上げ（TTS）**: Web Speech API を使用。リスニングポイントの英語フレーズ横にスピーカーボタンを自動挿入。
+  - `window.ttsBtnHtml(text)` — ボタン HTML 文字列を返すヘルパー関数（`day.html` / `list.html` の innerHTML 構築で使用）
+  - クリック → `en-US` / rate 0.85 で英語読み上げ。読み上げ中はボタンが青くパルス点滅
+  - 複数クリック時は前の発話を `cancel()` してから新規発話
+  - Web Speech API 非対応ブラウザでは `ttsBtnHtml` が定義されず、ボタン自体が表示されない（フォールバック済み）
 
 すべてのページで `data.js` → `script.js` の順に読み込む:
 ```html
@@ -115,6 +120,27 @@ Mobile-first。`body` の `max-width: 480px` は 600px 以上で解除。
 | `.day-col-right` | `day.html` | 学習ポイント列（`order: -1` で常に左表示） |
 
 **注意:** `.day-col-right`（学習ポイント）は CSS `order: -1` によって常に左側に表示される。DOM 順序は変えないこと。
+
+## リスニングポイント HTML 構造
+
+`day.html` と `list.html` で動的生成。英語フレーズは `.listen-en-row` でボタンと横並び。
+
+```html
+<div class="listen-item">
+  <div class="listen-en-row">
+    <div class="listen-en">Did you</div>           <!-- 英語フレーズ -->
+    <button class="tts-btn" data-speak="Did you" aria-label="読み上げ">
+      <!-- SVG スピーカーアイコン（script.js で自動挿入） -->
+    </button>
+  </div>
+  <div class="listen-kana">ディジュ</div>          <!-- カタカナ発音 -->
+  <div class="listen-note">d が弱くなる</div>      <!-- 変化の説明（任意）-->
+  <div class="listen-example">Did you get it?</div> <!-- 例文（任意）-->
+</div>
+```
+
+- `.tts-btn` は `window.ttsBtnHtml(item.en)` で生成。`data-speak` 属性に英語テキストを持つ
+- `.listen-en` の `margin-bottom` は `.listen-en-row` 側で管理（`listen-en` 自身には設定しない）
 
 ## アコーディオン構造（学習ポイント）
 
@@ -194,10 +220,12 @@ SP フレームレイアウト:
 セクション構成:
 1. ファイル構成
 2. ページ構成と役割
-3. コンテンツの編集（学習ポイント・リスニングポイント）
-4. レッスンページの追加手順
-5. レスポンシブレイアウトの仕様
-6. 運用上の注意
+3. data.js の構造
+4. コンテンツの編集（学習ポイント・リスニングポイント）
+5. レッスンの追加
+6. 共通機能（script.js）— 右クリック禁止 / 検索 / TTS
+7. レスポンシブレイアウト
+8. 運用上の注意
 
 スタイルは `001_CG-Pronunciation-Lesson/manual/manual.html` と同一パターン（スタンドアロン HTML、インライン CSS/JS）。
 

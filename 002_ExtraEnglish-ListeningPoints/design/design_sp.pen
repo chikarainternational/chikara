@@ -2176,7 +2176,8 @@
               "content": "リスニング完全攻略",
               "textAlign": "center",
               "fontFamily": "Hiragino Sans",
-              "fontSize": 13
+              "fontSize": 13,
+              "fontWeight": "normal"
             }
           ]
         },
@@ -2231,7 +2232,8 @@
                   "width": "fill_container",
                   "content": "3ヶ月で英語耳を作るプログラム",
                   "fontFamily": "Hiragino Sans",
-                  "fontSize": 12
+                  "fontSize": 12,
+                  "fontWeight": "normal"
                 }
               ]
             },
@@ -3312,14 +3314,46 @@
                   ],
                   "children": [
                     {
-                      "type": "text",
-                      "id": "iFmXp",
-                      "name": "li1en",
-                      "fill": "#023E8A",
-                      "content": "Did you",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "800"
+                      "type": "frame",
+                      "id": "1U43m",
+                      "name": "enRow1",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "XqCMx",
+                          "fill": "#023E8A",
+                          "content": "Did you",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "800"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "hLyJx",
+                          "name": "btn1",
+                          "width": 32,
+                          "height": 32,
+                          "fill": "#E0F7FA",
+                          "cornerRadius": 16,
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "AAEOh",
+                              "width": 16,
+                              "height": 16,
+                              "iconFontName": "volume-2",
+                              "iconFontFamily": "feather",
+                              "fill": "#0077B6"
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
                       "type": "text",
@@ -3364,14 +3398,46 @@
                   ],
                   "children": [
                     {
-                      "type": "text",
-                      "id": "HLqEG",
-                      "name": "li2en",
-                      "fill": "#023E8A",
-                      "content": "I told you",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "800"
+                      "type": "frame",
+                      "id": "3vZpH",
+                      "name": "enRow2",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "qK3Xk",
+                          "fill": "#023E8A",
+                          "content": "I told you",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "800"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "MLuK2",
+                          "name": "btn2",
+                          "width": 32,
+                          "height": 32,
+                          "fill": "#E0F7FA",
+                          "cornerRadius": 16,
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "QjJuT",
+                              "width": 16,
+                              "height": 16,
+                              "iconFontName": "volume-2",
+                              "iconFontFamily": "feather",
+                              "fill": "#0077B6"
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
                       "type": "text",
@@ -3408,14 +3474,46 @@
                   ],
                   "children": [
                     {
-                      "type": "text",
-                      "id": "21hw3",
-                      "name": "li3en",
-                      "fill": "#023E8A",
-                      "content": "Don't call me",
-                      "fontFamily": "Inter",
-                      "fontSize": 18,
-                      "fontWeight": "800"
+                      "type": "frame",
+                      "id": "Ec2BK",
+                      "name": "enRow3",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "6eB9K",
+                          "fill": "#023E8A",
+                          "content": "Don't call me",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "800"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "evRuX",
+                          "name": "btn3",
+                          "width": 32,
+                          "height": 32,
+                          "fill": "#E0F7FA",
+                          "cornerRadius": 16,
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "C9S8E",
+                              "width": 16,
+                              "height": 16,
+                              "iconFontName": "volume-2",
+                              "iconFontFamily": "feather",
+                              "fill": "#0077B6"
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
                       "type": "text",
@@ -4774,14 +4872,46 @@
                       ],
                       "children": [
                         {
-                          "type": "text",
-                          "id": "4toc7",
-                          "name": "li_aEn",
-                          "fill": "#023E8A",
-                          "content": "Did you",
-                          "fontFamily": "Inter",
-                          "fontSize": 17,
-                          "fontWeight": "800"
+                          "type": "frame",
+                          "id": "BI3iz",
+                          "name": "enRowTa",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Vvg6C",
+                              "fill": "#023E8A",
+                              "content": "Did you",
+                              "fontFamily": "Inter",
+                              "fontSize": 17,
+                              "fontWeight": "800"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "yt6uK",
+                              "name": "btnTa",
+                              "width": 30,
+                              "height": 30,
+                              "fill": "#E0F7FA",
+                              "cornerRadius": 15,
+                              "layout": "vertical",
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "Viqdp",
+                                  "width": 15,
+                                  "height": 15,
+                                  "iconFontName": "volume-2",
+                                  "iconFontFamily": "feather",
+                                  "fill": "#0077B6"
+                                }
+                              ]
+                            }
+                          ]
                         },
                         {
                           "type": "text",
@@ -4827,14 +4957,46 @@
                       ],
                       "children": [
                         {
-                          "type": "text",
-                          "id": "4zqdo",
-                          "name": "li_bEn",
-                          "fill": "#023E8A",
-                          "content": "I told you",
-                          "fontFamily": "Inter",
-                          "fontSize": 17,
-                          "fontWeight": "800"
+                          "type": "frame",
+                          "id": "C7I8t",
+                          "name": "enRowTb",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "if8fK",
+                              "fill": "#023E8A",
+                              "content": "I told you",
+                              "fontFamily": "Inter",
+                              "fontSize": 17,
+                              "fontWeight": "800"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "jMBmh",
+                              "name": "btnTb",
+                              "width": 30,
+                              "height": 30,
+                              "fill": "#E0F7FA",
+                              "cornerRadius": 15,
+                              "layout": "vertical",
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "f4V2w",
+                                  "width": 15,
+                                  "height": 15,
+                                  "iconFontName": "volume-2",
+                                  "iconFontFamily": "feather",
+                                  "fill": "#0077B6"
+                                }
+                              ]
+                            }
+                          ]
                         },
                         {
                           "type": "text",
@@ -5934,14 +6096,46 @@
                           ],
                           "children": [
                             {
-                              "type": "text",
-                              "id": "JKDqi",
-                              "name": "lpaEn",
-                              "fill": "#023E8A",
-                              "content": "Did you",
-                              "fontFamily": "Inter",
-                              "fontSize": 16,
-                              "fontWeight": "800"
+                              "type": "frame",
+                              "id": "eG2RV",
+                              "name": "enRowPa",
+                              "width": "fill_container",
+                              "gap": 8,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "GYUuK",
+                                  "fill": "#023E8A",
+                                  "content": "Did you",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 16,
+                                  "fontWeight": "800"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "OQ4tT",
+                                  "name": "btnPa",
+                                  "width": 28,
+                                  "height": 28,
+                                  "fill": "#E0F7FA",
+                                  "cornerRadius": 14,
+                                  "layout": "vertical",
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon_font",
+                                      "id": "p3bdh",
+                                      "width": 14,
+                                      "height": 14,
+                                      "iconFontName": "volume-2",
+                                      "iconFontFamily": "feather",
+                                      "fill": "#0077B6"
+                                    }
+                                  ]
+                                }
+                              ]
                             },
                             {
                               "type": "text",
@@ -5987,14 +6181,46 @@
                           ],
                           "children": [
                             {
-                              "type": "text",
-                              "id": "9Yr2H",
-                              "name": "lpbEn",
-                              "fill": "#023E8A",
-                              "content": "I told you",
-                              "fontFamily": "Inter",
-                              "fontSize": 16,
-                              "fontWeight": "800"
+                              "type": "frame",
+                              "id": "Yrwit",
+                              "name": "enRowPb",
+                              "width": "fill_container",
+                              "gap": 8,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "jLk8T",
+                                  "fill": "#023E8A",
+                                  "content": "I told you",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 16,
+                                  "fontWeight": "800"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "Tb8jd",
+                                  "name": "btnPb",
+                                  "width": 28,
+                                  "height": 28,
+                                  "fill": "#E0F7FA",
+                                  "cornerRadius": 14,
+                                  "layout": "vertical",
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon_font",
+                                      "id": "m1S4Z",
+                                      "width": 14,
+                                      "height": 14,
+                                      "iconFontName": "volume-2",
+                                      "iconFontFamily": "feather",
+                                      "fill": "#0077B6"
+                                    }
+                                  ]
+                                }
+                              ]
                             },
                             {
                               "type": "text",
