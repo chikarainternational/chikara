@@ -2703,7 +2703,7 @@
           "height": 676,
           "fill": "#F0F9FF",
           "layout": "vertical",
-          "gap": 10,
+          "gap": 16,
           "padding": 16,
           "children": [
             {

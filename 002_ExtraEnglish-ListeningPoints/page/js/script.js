@@ -37,6 +37,7 @@ document.addEventListener("contextmenu", function(e) { e.preventDefault(); });
     var utter = new SpeechSynthesisUtterance(text);
     utter.lang = 'en-US';
     utter.rate = 0.85;
+    utter.pitch = 1.2;
     btn.classList.add('speaking');
     utter.onend  = function () { btn.classList.remove('speaking'); };
     utter.onerror = function () { btn.classList.remove('speaking'); };
