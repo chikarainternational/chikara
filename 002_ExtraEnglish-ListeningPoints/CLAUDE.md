@@ -20,7 +20,8 @@ This directory contains a **static web app** and design assets for the **Extra E
     ├── style.css                  # Shared styles — mobile-first, responsive
     ├── js/
     │   ├── data.js                # 全コンテンツ JSON（単一の真実のソース）
-    │   └── script.js              # 右クリック禁止 + 検索オーバーレイ + 音声読み上げ TTS（全ページ共通）
+    │   └── script.js              # 右クリック禁止 + 検索オーバーレイ + 音声再生（全ページ共通）
+    ├── audio/                     # 事前生成済みMP3（ElevenLabs / Bella）68ファイル
     ├── index.html                 # Top page — Month selection (static)
     ├── month.html                 # Month page — ?m=1|2|3 でルーティング
     ├── day.html                   # Day page — ?m=1&l=1 でルーティング
@@ -74,11 +75,13 @@ HTMLファイルは編集不要。
   - 学習ポイント（フレーズ・日本語訳・文法説明・例文）
   - リスニングポイント（英語・カタカナ・発音ノート）
   - 結果クリック → `day.html?m=X&l=Y` へ遷移
-- **音声読み上げ（TTS）**: Web Speech API を使用。リスニングポイントの英語フレーズ横にスピーカーボタンを自動挿入。
+- **音声再生（TTS）**: 事前生成済みMP3を `<Audio>` API で再生。リスニングポイントの英語フレーズ横にスピーカーボタンを自動挿入。
   - `window.ttsBtnHtml(text)` — ボタン HTML 文字列を返すヘルパー関数（`day.html` / `list.html` の innerHTML 構築で使用）
-  - クリック → `en-US` / rate 0.85 で英語読み上げ。読み上げ中はボタンが青くパルス点滅
-  - 複数クリック時は前の発話を `cancel()` してから新規発話
-  - Web Speech API 非対応ブラウザでは `ttsBtnHtml` が定義されず、ボタン自体が表示されない（フォールバック済み）
+  - クリック → `audio/<filename>.mp3` を再生。読み上げ中はボタンが青くパルス点滅
+  - 複数クリック時は前の再生を停止してから新規再生
+  - ファイル名変換: テキストを小文字化・アポストロフィ除去・非英数字をアンダースコアに変換（例: `"Don't call me"` → `dont_call_me.mp3`）
+  - 音声ファイル: ElevenLabs / Bella (Professional, Bright, Warm) / eleven_multilingual_v2 / speed 0.85 で生成済み
+  - **新フレーズを追加する場合**: ElevenLabs で MP3 を生成し `page/audio/` に配置する。ファイル名は上記変換規則に従うこと
 
 すべてのページで `data.js` → `script.js` の順に読み込む:
 ```html

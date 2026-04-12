@@ -76,7 +76,8 @@
     ├── style.css        ← 全ページ共通スタイル
     ├── js/
     │   ├── data.js      ← 全コンテンツ（唯一の編集対象）
-    │   └── script.js    ← 右クリック禁止 / 検索 / 音声読み上げ（全ページ共通）
+    │   └── script.js    ← 右クリック禁止 / 検索 / 音声再生（全ページ共通）
+    ├── audio/           ← 事前生成済みMP3（ElevenLabs / Bella）68ファイル
     ├── index.html       ← トップ（月選択）
     ├── month.html       ← 月別レッスン一覧（?m=1|2|3）
     ├── day.html         ← 日別ページ（?m=1&l=1）
@@ -93,7 +94,8 @@
     ├── style.css        ← Shared styles for all pages
     ├── js/
     │   ├── data.js      ← All content (the only file you need to edit)
-    │   └── script.js    ← Right-click / Search / TTS (shared across all pages)
+    │   └── script.js    ← Right-click / Search / Audio playback (shared across all pages)
+    ├── audio/           ← Pre-generated MP3 files (ElevenLabs / Bella) — 68 files
     ├── index.html       ← Top page (month selection)
     ├── month.html       ← Month lesson list (?m=1|2|3)
     ├── day.html         ← Day page (?m=1&l=1)
@@ -403,24 +405,52 @@
 </ul>
 
 <h3 id="tts">
-  <span class="ja">③ 音声読み上げ（TTS）</span>
-  <span class="en">③ Text-to-Speech (TTS)</span>
+  <span class="ja">③ 音声再生（MP3）</span>
+  <span class="en">③ Audio Playback (MP3)</span>
 </h3>
-<p class="ja">リスニングポイントの英語フレーズ横にスピーカーボタンを自動挿入します。クリックで Web Speech API によるブラウザ音声読み上げが実行されます（<code>lang: en-US</code> / 速度 0.85）。読み上げ中はボタンが青くパルス点滅します。</p>
-<p class="en">A speaker button is automatically placed next to each English phrase in the listening points. Clicking it triggers browser text-to-speech via the Web Speech API (<code>lang: en-US</code>, rate 0.85). The button pulses blue while speaking.</p>
+<p class="ja">リスニングポイントの英語フレーズ横にスピーカーボタンを自動挿入します。クリックで <code>page/audio/</code> フォルダ内の事前生成済みMP3ファイルを再生します。再生中はボタンが青くパルス点滅します。</p>
+<p class="en">A speaker button is automatically placed next to each English phrase in the listening points. Clicking it plays a pre-generated MP3 from the <code>page/audio/</code> folder. The button pulses blue while playing.</p>
 
 <table>
   <tr>
-    <th><span class="ja">ブラウザ</span><span class="en">Browser</span></th>
-    <th><span class="ja">対応状況</span><span class="en">Support</span></th>
+    <th><span class="ja">項目</span><span class="en">Item</span></th>
+    <th><span class="ja">内容</span><span class="en">Detail</span></th>
   </tr>
-  <tr><td>Chrome / Edge</td><td><span class="ja">○ 完全対応</span><span class="en">○ Full support</span></td></tr>
-  <tr><td>Safari (iOS / macOS)</td><td><span class="ja">○ 対応</span><span class="en">○ Supported</span></td></tr>
-  <tr><td>Firefox</td><td><span class="ja">△ 音声が少ない場合あり</span><span class="en">△ Limited voice availability</span></td></tr>
+  <tr><td><span class="ja">音声サービス</span><span class="en">Voice service</span></td><td>ElevenLabs</td></tr>
+  <tr><td><span class="ja">使用ボイス</span><span class="en">Voice</span></td><td>Bella (Professional, Bright, Warm)</td></tr>
+  <tr><td><span class="ja">モデル</span><span class="en">Model</span></td><td>eleven_multilingual_v2</td></tr>
+  <tr><td><span class="ja">速度</span><span class="en">Speed</span></td><td>0.85</td></tr>
+  <tr><td><span class="ja">ファイル数</span><span class="en">File count</span></td><td>68ファイル（Month 1〜3 全リスニングポイント）</td></tr>
+  <tr><td><span class="ja">ファイル形式</span><span class="en">Format</span></td><td>mp3_44100_128</td></tr>
 </table>
 
-<div class="note ja">Web Speech API 非対応ブラウザではボタンが表示されません。コンテンツの閲覧には影響ありません。</div>
-<div class="note en">On unsupported browsers, the button is silently hidden. Content browsing is unaffected.</div>
+<h3><span class="ja">ファイル名の命名規則</span><span class="en">Filename Convention</span></h3>
+<p class="ja">英語テキストから自動変換されます（<code>script.js</code> の <code>textToFilename()</code> 関数）。</p>
+<p class="en">Filenames are derived automatically from the English text via the <code>textToFilename()</code> function in <code>script.js</code>.</p>
+<pre><code><span class="ja">変換ルール:
+  1. 小文字に変換
+  2. アポストロフィ（' '）を削除
+  3. 英数字以外の連続した文字をアンダースコアに変換
+  4. 末尾に .mp3 を付加
+
+例:
+  "Don't call me"  →  dont_call_me.mp3
+  "Oh, it's you"   →  oh_its_you.mp3
+  "I'll get it"    →  ill_get_it.mp3
+  "Uh-huh"         →  uh_huh.mp3</span><span class="en">Rules:
+  1. Convert to lowercase
+  2. Remove apostrophes (' ')
+  3. Replace consecutive non-alphanumeric chars with underscore
+  4. Append .mp3
+
+Examples:
+  "Don't call me"  →  dont_call_me.mp3
+  "Oh, it's you"   →  oh_its_you.mp3
+  "I'll get it"    →  ill_get_it.mp3
+  "Uh-huh"         →  uh_huh.mp3</span></code></pre>
+
+<div class="note ja"><strong>新しいフレーズを追加するとき：</strong> <code>data.js</code> に listen アイテムを追加したら、同じ命名規則でMP3ファイルを生成し <code>page/audio/</code> に配置してください。MP3がない場合はボタンクリック時に音声が再生されません（エラーは出ません）。</div>
+<div class="note en"><strong>When adding a new phrase:</strong> After adding a listen item to <code>data.js</code>, generate an MP3 with the same naming convention and place it in <code>page/audio/</code>. If the file is missing, the button click silently does nothing.</div>
 
 <p class="ja">すべてのページで以下の順番でスクリプトを読み込んでいます。順序を変えないでください。</p>
 <p class="en">All pages load scripts in the following order. Do not change the order.</p>

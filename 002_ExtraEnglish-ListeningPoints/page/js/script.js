@@ -1,10 +1,8 @@
 // 右クリック禁止
 document.addEventListener("contextmenu", function(e) { e.preventDefault(); });
 
-// ===== TTS（Web Speech API）=====
+// ===== TTS（MP3 再生）=====
 (function () {
-  if (!window.speechSynthesis) return;
-
   var TTS_SVG =
     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' +
       '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>' +
@@ -12,12 +10,22 @@ document.addEventListener("contextmenu", function(e) { e.preventDefault(); });
       '<path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>' +
     '</svg>';
 
+  // テキスト → MP3ファイル名に変換
+  function textToFilename(text) {
+    return text.toLowerCase()
+      .replace(/['']/g, '')
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_|_$/g, '') + '.mp3';
+  }
+
   // ボタン HTML を生成（day.html / list.html の innerHTML 構築で使用）
   window.ttsBtnHtml = function (text) {
     var escaped = String(text || '')
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     return '<button class="tts-btn" data-speak="' + escaped + '" aria-label="読み上げ">' + TTS_SVG + '</button>';
   };
+
+  var currentAudio = null;
 
   // イベント委譲でクリック処理
   document.addEventListener('click', function (e) {
@@ -27,22 +35,22 @@ document.addEventListener("contextmenu", function(e) { e.preventDefault(); });
     var text = btn.dataset.speak;
     if (!text) return;
 
-    window.speechSynthesis.cancel();
-
-    // 発話中インジケーターをリセット
+    // 再生中のオーディオを停止
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+    }
     document.querySelectorAll('.tts-btn.speaking').forEach(function (b) {
       b.classList.remove('speaking');
     });
 
-    var utter = new SpeechSynthesisUtterance(text);
-    utter.lang = 'en-US';
-    utter.rate = 0.85;
-    utter.pitch = 1.2;
+    var filename = textToFilename(text);
+    var audio = new Audio('audio/' + filename);
+    currentAudio = audio;
     btn.classList.add('speaking');
-    utter.onend  = function () { btn.classList.remove('speaking'); };
-    utter.onerror = function () { btn.classList.remove('speaking'); };
-
-    window.speechSynthesis.speak(utter);
+    audio.onended  = function () { btn.classList.remove('speaking'); };
+    audio.onerror  = function () { btn.classList.remove('speaking'); };
+    audio.play();
   });
 })();
 
